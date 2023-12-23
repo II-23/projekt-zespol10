@@ -1,0 +1,6 @@
+Jak powinna wygladac gra:
+
+1.Po wcisnieciu przycisku start powinien wlaczyc sie 
+edytor map czyli zaczac pojawiac sie kwadraty reprezentujace 
+sciezke i powinny byc zapisywane wspolzedne sciezki zeby rzeciwnicy 
+mogli po niej chodzic
