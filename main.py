@@ -9,6 +9,9 @@ pygame.init()
 screen = pygame.display.set_mode((width, height))
 pygame.display.set_caption('Main')
 
+clock = pygame.time.Clock()
+fps = 30
+
 przycisk_Start = Przycisk(350, 100, 100, 50, "Start")
 przycisk_Wyjdz = Przycisk(350, 150, 100, 50, "Wyjdz")
 
@@ -31,6 +34,7 @@ while running:
             
             if game_status == GRA:
                 dodajKwadrat()
+                wypelnienieSciezki()
 
     if game_status==MENU:
         screen.fill(white)
@@ -41,6 +45,7 @@ while running:
         rysujSciezke(screen)
     
     pygame.display.flip()
+    clock.tick(fps)
 
 pygame.quit()
 sys.exit()
