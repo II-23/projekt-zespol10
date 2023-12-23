@@ -1,0 +1,9 @@
+Jak powinna wygladac gra:
+
+1.Po wcisnieciu przycisku start powinien wlaczyc sie 
+edytor map czyli zaczac pojawiac sie kwadraty reprezentujace 
+sciezke i powinny byc zapisywane wspolzedne sciezki zeby przeciwnicy 
+mogli po niej chodzic
+
+W branchu sciezka jest juz dzialajacy w miare kod tworzenia sciezki po wcisnieciu Start.
+Do listy waypoints z sciezka.py dodawane sa wspolrzedne po ktorych powinni chodzic przeciwnicy
