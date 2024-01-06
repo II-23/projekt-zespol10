@@ -1,10 +1,11 @@
-width, height = 800, 600
+WIDTH, HEIGHT = 800, 600
+FPS = 60
 
 MENU = 0
 GRA = 1
 GAME_OVER = 2
 
-siatka = 50
+SIATKA = 50
 
-black = (0, 0, 0)
-white = (255, 255, 255)
+BLACK = (0, 0, 0)
+WHITE = (255, 255, 255)
