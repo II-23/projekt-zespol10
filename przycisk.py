@@ -16,7 +16,7 @@ class Przycisk:
         text_rect = text.get_rect(center=self.rect.center)
         surface.blit(text, text_rect)
 
-    def czy_klikniety(self, pos):
+    def klikniety(self, pos):
         return self.rect.collidepoint(pos)
     
     def akcje(self):
