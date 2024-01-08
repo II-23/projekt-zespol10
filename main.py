@@ -28,6 +28,7 @@ clock = pygame.time.Clock()
 #stworz przyciski
 przycisk_Start = Przycisk(350, 100, 100, 50, "Start")
 przycisk_Wyjdz = Przycisk(350, 150, 100, 50, "Wyjdz")
+przycisk_Test = Przycisk(350, 200, 100, 50, "skip to the game (nie chce mi sie robic ciagle tej sciezki)")
 
 game_status = MENU
 running = True
@@ -48,14 +49,21 @@ while running:
         screen.fill(WHITE)
         przycisk_Start.draw(screen)
         przycisk_Wyjdz.draw(screen)
+        przycisk_Test.draw(screen)
+
+    if game_status == KREATOR_SCIEZKI:
+        screen.fill(WHITE)
+        rysujSciezke(screen)
 
     if game_status == GRA:
         screen.fill(WHITE)
         rysujSciezke(screen)
 
+        #aktualizuj grupy
+        sojusznicy.update()
+
         #wyswietl grupy
         sojusznicy.draw(screen)
-        sojusznik.move()
 
     ######################
     # ZARZADZANIE EVENTAMI
@@ -72,16 +80,28 @@ while running:
                 if event.button == 1:
                     if przycisk_Start.klikniety(pygame.mouse.get_pos()):
                         przycisk_Start.akcje()
-                        game_status = GRA
+                        game_status = KREATOR_SCIEZKI
                     if przycisk_Wyjdz.klikniety(pygame.mouse.get_pos()):
                         przycisk_Wyjdz.akcje()
                         running = False
+                    if przycisk_Test.klikniety(pygame.mouse.get_pos()):
+                        game_status = GRA
+                        continue
+
+        #eventy w kreatorze sciezki
+        if game_status == KREATOR_SCIEZKI:
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                dodajKwadrat()
+                wypelnienieSciezki()
+            if czy_koniec_sciezki():
+                game_status = GRA
+                continue
 
         #eventy w grze
         if game_status == GRA:
             if event.type == pygame.MOUSEBUTTONDOWN:
-                dodajKwadrat()
-                wypelnienieSciezki()
+                sojusznik = Sojusznik(pygame.mouse.get_pos(), sojusznik_image)
+                sojusznicy.add(sojusznik)
 
         #eventy po zakonczeniu gry
         if game_status == GAME_OVER:
