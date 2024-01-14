@@ -16,6 +16,8 @@ sciezka.add(kwadrat1)
 kwadrat1 = Kwadrat((255, 0, 0), SIATKA, 9, 0)
 sciezka.add(kwadrat1)
 
+koordynatySciezki = [[12,0]]
+
 def dodajKwadrat():
     mouse_x, mouse_y = pygame.mouse.get_pos()
     col = mouse_x // SIATKA
@@ -36,13 +38,18 @@ def wypelnienieSciezki():
             for col in range(min(start_col, end_col), max(start_col, end_col) + 1):
                 kwadrat = Kwadrat((255, 0, 0), SIATKA, start_row, col)
                 sciezka.add(kwadrat)
+                if([col,start_row] not in koordynatySciezki):
+                    koordynatySciezki.append([col, start_row])
         elif start_col == end_col:
             for row in range(min(start_row, end_row), max(start_row, end_row) + 1):
                 kwadrat = Kwadrat((255, 0, 0), SIATKA, row, start_col)
                 sciezka.add(kwadrat)
+                if([start_col, row] not in koordynatySciezki):
+                    koordynatySciezki.append([start_col, row])
 
 def czy_koniec_sciezki():
     if [0,9] in waypoints:
+        print(koordynatySciezki)
         return True
         print("Pelna sciezka")
     else:
