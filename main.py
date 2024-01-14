@@ -4,6 +4,7 @@ from przycisk import Przycisk
 from sojusznicy import Sojusznik
 from stale import *
 from sciezka import *
+from wieze import Wieza
 
 #inicjalizuj pygame
 pygame.init()
@@ -14,11 +15,21 @@ pygame.display.set_caption('Gra')
 
 #zaladuj assety
 sojusznik_image = pygame.image.load('assets/images/enemies/enemy_1.png').convert_alpha()
+kursor_wieza = pygame.image.load('assets/images/turrets/cursor_turret.png').convert_alpha()
+
+#stawianie wiez
+def postaw_wieze(mouse_pos):
+    mouse_x = mouse_pos[0] // SIATKA
+    mouse_y = mouse_pos[1] // SIATKA
+    wieza = Wieza(kursor_wieza, mouse_x, mouse_y)
+    if([mouse_x, mouse_y] not in koordynatySciezki):
+        wieze.add(wieza)
 
 #stworz grupy
 sojusznicy = pygame.sprite.Group()
 sojusznik = Sojusznik((0,100),sojusznik_image)
 sojusznicy.add(sojusznik)
+wieze = pygame.sprite.Group()
 
 sciezka = pygame.sprite.Group()
 
@@ -64,6 +75,7 @@ while running:
 
         #wyswietl grupy
         sojusznicy.draw(screen)
+        wieze.draw(screen)
 
     ######################
     # ZARZADZANIE EVENTAMI
@@ -102,6 +114,14 @@ while running:
             if event.type == pygame.MOUSEBUTTONDOWN:
                 sojusznik = Sojusznik(pygame.mouse.get_pos(), sojusznik_image)
                 sojusznicy.add(sojusznik)
+
+        if game_status == GRA:
+            if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1: 
+                mouse_pos = pygame.mouse.get_pos()
+                #sprawdzam czy myszka jest na mapie
+                if mouse_pos[0] < WIDTH and mouse_pos[1] < HEIGHT:
+                    postaw_wieze(mouse_pos)
+
 
         #eventy po zakonczeniu gry
         if game_status == GAME_OVER:
