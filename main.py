@@ -5,17 +5,24 @@ from sojusznicy import Sojusznik
 from stale import *
 from sciezka import *
 from wieze import Wieza
+from wrogowie import Wrog
 
 #inicjalizuj pygame
 pygame.init()
 
 #stworz okno gry
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
-pygame.display.set_caption('Gra')
+pygame.display.set_caption('PWI - Tower Defense')
 
 #zaladuj assety
 sojusznik_image = pygame.image.load('assets/images/enemies/enemy_1.png').convert_alpha()
 kursor_wieza = pygame.image.load('assets/images/turrets/cursor_turret.png').convert_alpha()
+wrog_image = {
+    "a":    pygame.image.load('assets/images/enemies/enemy_1.png').convert_alpha(),
+    "b":    pygame.image.load('assets/images/enemies/enemy_2.png').convert_alpha(),
+    "c":    pygame.image.load('assets/images/enemies/enemy_3.png').convert_alpha(),
+    "d":    pygame.image.load('assets/images/enemies/enemy_4.png').convert_alpha()
+}
 
 #stawianie wiez
 def postaw_wieze(mouse_pos):
@@ -32,6 +39,10 @@ sojusznicy.add(sojusznik)
 wieze = pygame.sprite.Group()
 
 sciezka = pygame.sprite.Group()
+wrogowie = pygame.sprite.Group()
+
+wrog = Wrog("d",(200,300),wrog_image)
+wrogowie.add(wrog)
 
 #zegar
 clock = pygame.time.Clock()
@@ -72,10 +83,13 @@ while running:
 
         #aktualizuj grupy
         sojusznicy.update()
+        wrogowie.update()
+
 
         #wyswietl grupy
         sojusznicy.draw(screen)
         wieze.draw(screen)
+        wrogowie.draw(screen)
 
     ######################
     # ZARZADZANIE EVENTAMI
@@ -129,6 +143,9 @@ while running:
 
     #aktualizuj ekran
     pygame.display.flip()
+
+    print(waypoints)
+
 
 pygame.quit()
 sys.exit()
