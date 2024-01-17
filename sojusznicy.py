@@ -30,10 +30,16 @@ class Sojusznik(pg.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.center = self.position
 
-    def update(self):
+    def update(self,enemy_sprite_group):
         if not self.is_already_spawned(self.position):
             self.spawn()
         self.rotate()
+        target=self.serch_target(enemy_sprite_group)
+        if(target==None):
+            # nie ma wroga w pobliżu
+            pass
+        else:
+            self.attack(target)
 
     def move(self, destination):
         self.destination = Vector2(destination)
@@ -88,11 +94,13 @@ class Sojusznik(pg.sprite.Sprite):
         for ene in enemy_sprite_group:
             distance=ene.pos - self.position
             # warunek czy wróg znajduje sie w okręgu wyznaczonym przez self.radius i środku w self.position
-            if(distance[0]**2+distance**2<=self.radius):
+            if(distance[0]**2+distance[1]**2<=self.radius):
                 # tu przydała by się jakaś funkcja wroga typu tageted żeby przestał iść do waypointa tylko zaczął do sojusznika i zaczeli się bić np ene.targeted(sojusznik)
+                ene.targeted(self)
                 # Jeśli jakiegoś napotka będzie do niego podchodził
                 return ene
         return None
     def attack(self,target):
         #musi jakos sie odwolac do danego wroga...
+        print('uderzylem go')
         pass

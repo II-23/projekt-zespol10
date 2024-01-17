@@ -5,7 +5,7 @@ from sojusznicy import Sojusznik
 from stale import *
 from sciezka import *
 from wieze import Wieza
-from wrogowie import Wrog
+from wrogowie import *
 
 #inicjalizuj pygame
 pygame.init()
@@ -23,6 +23,8 @@ wrog_image = {
     "c":    pygame.image.load('assets/images/enemies/enemy_3.png').convert_alpha(),
     "d":    pygame.image.load('assets/images/enemies/enemy_4.png').convert_alpha()
 }
+
+#       !!!stawianie wierzy powinno być funkcją clasy wierza!!!
 
 #stawianie wiez
 def postaw_wieze(mouse_pos):
@@ -58,7 +60,6 @@ running = True
 ##################
 # GLOWNA PETLA GRY
 ##################
-
 while running:
 
     clock.tick(FPS)
@@ -82,7 +83,7 @@ while running:
         rysujSciezke(screen)
 
         #aktualizuj grupy
-        sojusznicy.update()
+        sojusznicy.update(wrogowie)
         wrogowie.update()
 
 
@@ -91,6 +92,9 @@ while running:
         wieze.draw(screen)
         wrogowie.draw(screen)
 
+        for i in wrogowie:
+            if(i.alive==False):
+                wrogowie.remove(i)
     ######################
     # ZARZADZANIE EVENTAMI
     ######################
@@ -129,12 +133,18 @@ while running:
                 sojusznik = Sojusznik(pygame.mouse.get_pos(), sojusznik_image)
                 sojusznicy.add(sojusznik)
 
+        if game_status==GRA:
+            wrog = Wrog("d", waypoints, wrog_image)
+            wrogowie.add(wrog)
+
         if game_status == GRA:
             if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1: 
                 mouse_pos = pygame.mouse.get_pos()
                 #sprawdzam czy myszka jest na mapie
                 if mouse_pos[0] < WIDTH and mouse_pos[1] < HEIGHT:
                     postaw_wieze(mouse_pos)
+
+
 
 
         #eventy po zakonczeniu gry
@@ -144,7 +154,6 @@ while running:
     #aktualizuj ekran
     pygame.display.flip()
 
-    print(waypoints)
 
 
 pygame.quit()
