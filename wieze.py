@@ -64,12 +64,15 @@ class Wieza(pg.sprite.Sprite):
     def wybierz_cel(self, wrogowie):
         x = 0
         y = 0
+        nowy_cel = None
         for wrog in wrogowie:
             x = wrog.pos[0] - self.x
             y = wrog.pos[1] - self.y
             dystans = math.sqrt(x ** 2 + y ** 2)
             if dystans < self.zasieg:
-                self.cel = wrog
+                nowy_cel = wrog
+            self.cel = nowy_cel
+            if nowy_cel is not None:
                 self.angle = -math.degrees(math.atan2(y, x))
     
     def update(self, wrogowie):
@@ -78,5 +81,9 @@ class Wieza(pg.sprite.Sprite):
         else:
             x = self.cel.pos[0] - self.x
             y = self.cel.pos[1] - self.y
-            self.angle = -math.degrees(math.atan2(y, x))
+            dystans = math.sqrt(x ** 2 + y ** 2)
+            if (dystans > self.zasieg):
+                self.cel = None
+            else:
+                self.angle = -math.degrees(math.atan2(y, x))
 
