@@ -30,8 +30,11 @@ wrog_image = {
     "c":    pygame.image.load('assets/images/enemies/enemy_3.png').convert_alpha(),
     "d":    pygame.image.load('assets/images/enemies/enemy_4.png').convert_alpha()
 }
-kup_wieze = pygame.image.load('assets/images/buttons/buy_turret.png').convert_alpha()
-cancel = pygame.image.load('assets/images/buttons/cancel.png').convert_alpha()
+kup_wieze = pygame.image.load('res/przyciski/kup_wieze.png').convert_alpha()
+nowe_wymiary = (200,200)
+kup_wieze = pygame.transform.scale(kup_wieze, nowe_wymiary)
+cancel = pygame.image.load('res/przyciski/cancel.png').convert_alpha()
+cancel = pygame.transform.scale(cancel, nowe_wymiary)
 
 #       !!!stawianie wiezy powinno być funkcją clasy wierza!!!
 #       !!! ok szefito, zmienione !!!
@@ -56,8 +59,8 @@ clock = pygame.time.Clock()
 przycisk_Start = Przycisk(475, 200, 100, 50, "Start")
 przycisk_Wyjdz = Przycisk(475, 250, 100, 50, "Wyjdz")
 przycisk_Test = Przycisk(475, 300, 100, 50, "skip to the game (nie chce mi sie robic ciagle tej sciezki)")
-przycisk_Wieza = PrzyciskPanel(WIDTH + 50, 240, kup_wieze, True)
-przycisk_Cancel = PrzyciskPanel(WIDTH + 70, 300, cancel, True)
+przycisk_Wieza = PrzyciskPanel(WIDTH + 28, 170, kup_wieze, True)
+przycisk_Cancel = PrzyciskPanel(WIDTH + 28, 230, cancel, True)
 
 game_status = MENU
 running = True
