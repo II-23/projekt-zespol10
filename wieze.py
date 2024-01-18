@@ -70,7 +70,13 @@ class Wieza(pg.sprite.Sprite):
             dystans = math.sqrt(x ** 2 + y ** 2)
             if dystans < self.zasieg:
                 self.cel = wrog
-                self.angle = math.degrees(math.atan2(-x, y))
+                self.angle = -math.degrees(math.atan2(y, x))
     
     def update(self, wrogowie):
-        self.wybierz_cel(wrogowie)
+        if self.cel == None:
+            self.wybierz_cel(wrogowie)
+        else:
+            x = self.cel.pos[0] - self.x
+            y = self.cel.pos[1] - self.y
+            self.angle = -math.degrees(math.atan2(y, x))
+
