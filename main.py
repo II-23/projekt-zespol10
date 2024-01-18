@@ -14,6 +14,9 @@ pygame.init()
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption('PWI - Tower Defense')
 
+#zmienne
+wybrana_wieza = None
+
 #zaladuj assety
 sojusznik_image = pygame.image.load('assets/images/enemies/enemy_1.png').convert_alpha()
 kursor_wieza = pygame.image.load('assets/images/turrets/cursor_turret.png').convert_alpha()
@@ -25,14 +28,7 @@ wrog_image = {
 }
 
 #       !!!stawianie wierzy powinno być funkcją clasy wierza!!!
-
-#stawianie wiez
-def postaw_wieze(mouse_pos):
-    mouse_x = mouse_pos[0] // SIATKA
-    mouse_y = mouse_pos[1] // SIATKA
-    wieza = Wieza(kursor_wieza, mouse_x, mouse_y)
-    if([mouse_x, mouse_y] not in koordynatySciezki):
-        wieze.add(wieza)
+#       !!! ok szefito, zmienione !!!
 
 #stworz grupy
 sojusznicy = pygame.sprite.Group()
@@ -86,15 +82,17 @@ while running:
         sojusznicy.update(wrogowie)
         wrogowie.update()
 
-
         #wyswietl grupy
         sojusznicy.draw(screen)
-        wieze.draw(screen)
+        for wieza in wieze:
+            wieza.draw(screen)
         wrogowie.draw(screen)
 
         for i in wrogowie:
             if(i.alive==False):
                 wrogowie.remove(i)
+        
+
     ######################
     # ZARZADZANIE EVENTAMI
     ######################
@@ -142,7 +140,8 @@ while running:
                 mouse_pos = pygame.mouse.get_pos()
                 #sprawdzam czy myszka jest na mapie
                 if mouse_pos[0] < WIDTH and mouse_pos[1] < HEIGHT:
-                    postaw_wieze(mouse_pos)
+                    Wieza.postaw_wieze(mouse_pos, kursor_wieza, wieze)
+                    #wybrana_wieza = Wieza.wybierz_wieze(mouse_pos, wieze)
 
 
 
