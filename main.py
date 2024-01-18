@@ -7,16 +7,18 @@ from sciezka import *
 from wieze import Wieza
 from wrogowie import *
 from game import Game
+from przycisk_panel import PrzyciskPanel
 import random
 
 #inicjalizuj pygame
 pygame.init()
 
 #stworz okno gry
-screen = pygame.display.set_mode((WIDTH, HEIGHT))
+screen = pygame.display.set_mode((WIDTH + PANEL_PRZYCISKI, HEIGHT))
 pygame.display.set_caption('PWI - Tower Defense')
 
 #zmienne
+stawianie_wiez = False
 wybrana_wieza = None
 
 #zaladuj assety
@@ -28,6 +30,8 @@ wrog_image = {
     "c":    pygame.image.load('assets/images/enemies/enemy_3.png').convert_alpha(),
     "d":    pygame.image.load('assets/images/enemies/enemy_4.png').convert_alpha()
 }
+kup_wieze = pygame.image.load('assets/images/buttons/buy_turret.png').convert_alpha()
+cancel = pygame.image.load('assets/images/buttons/cancel.png').convert_alpha()
 
 #       !!!stawianie wiezy powinno być funkcją clasy wierza!!!
 #       !!! ok szefito, zmienione !!!
@@ -49,9 +53,11 @@ czas_spawnu_wroga = pygame.time.get_ticks()
 clock = pygame.time.Clock()
 
 #stworz przyciski
-przycisk_Start = Przycisk(350, 100, 100, 50, "Start")
-przycisk_Wyjdz = Przycisk(350, 150, 100, 50, "Wyjdz")
-przycisk_Test = Przycisk(350, 200, 100, 50, "skip to the game (nie chce mi sie robic ciagle tej sciezki)")
+przycisk_Start = Przycisk(475, 200, 100, 50, "Start")
+przycisk_Wyjdz = Przycisk(475, 250, 100, 50, "Wyjdz")
+przycisk_Test = Przycisk(475, 300, 100, 50, "skip to the game (nie chce mi sie robic ciagle tej sciezki)")
+przycisk_Wieza = PrzyciskPanel(WIDTH + 50, 240, kup_wieze, True)
+przycisk_Cancel = PrzyciskPanel(WIDTH + 70, 300, cancel, True)
 
 game_status = MENU
 running = True
@@ -75,21 +81,43 @@ while running:
 
     if game_status == KREATOR_SCIEZKI:
         screen.fill(WHITE)
+        panel = pygame.Rect(WIDTH, 0, PANEL_PRZYCISKI, HEIGHT)
+        screen.fill(BLUE, panel)
         rysujSciezke(screen)
 
     if game_status == GRA:
         screen.fill(WHITE)
+        panel = pygame.Rect(WIDTH, 0, PANEL_PRZYCISKI, HEIGHT)
+        screen.fill(BLUE, panel)
         rysujSciezke(screen)
+
+        #wyswietl przyciski z boku
+        if przycisk_Wieza.draw(screen):
+            stawianie_wiez = True
+        if stawianie_wiez == True:
+            kursor_rect = kursor_wieza.get_rect()
+            kursor_poz = pygame.mouse.get_pos()
+            kursor_rect.center = kursor_poz
+            if kursor_poz[0] < WIDTH:
+                screen.blit(kursor_wieza, kursor_rect)
+            if przycisk_Cancel.draw(screen):
+                stawianie_wiez = False
 
         #aktualizuj grupy
         sojusznicy.update(wrogowie)
         for wrog in wrogowie:
             wrog.update(wrogowie,game)
+        wieze.update(wrogowie)
+        
+        #wyswietl wieze
+        for wieza in wieze:
+            wieza.draw(screen)
+        
+        if wybrana_wieza:
+            wybrana_wieza.wybrana = True
 
         #wyswietl grupy
         sojusznicy.draw(screen)
-        for wieza in wieze:
-            wieza.draw(screen)
         wrogowie.draw(screen)
 
         #spawnuj wrogow
@@ -151,15 +179,16 @@ while running:
                 sojusznicy.add(sojusznik)
 
 
-
-
-
             if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1: 
                 mouse_pos = pygame.mouse.get_pos()
                 #sprawdzam czy myszka jest na mapie
                 if mouse_pos[0] < WIDTH and mouse_pos[1] < HEIGHT:
-                    Wieza.postaw_wieze(mouse_pos, kursor_wieza, wieze)
-                    #wybrana_wieza = Wieza.wybierz_wieze(mouse_pos, wieze)
+                    wybrana_wieza = None
+                    Wieza.usun_range(wieze)
+                    if stawianie_wiez == True:
+                        Wieza.postaw_wieze(mouse_pos, kursor_wieza, wieze)
+                    else:
+                        wybrana_wieza = Wieza.wybierz_wieze(mouse_pos, wieze)
 
 
 
@@ -175,3 +204,4 @@ while running:
 
 pygame.quit()
 sys.exit()
+

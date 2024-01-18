@@ -1,4 +1,5 @@
 WIDTH, HEIGHT = 800, 600
+PANEL_PRZYCISKI = 250
 FPS = 60
 
 MENU = 0
@@ -10,5 +11,7 @@ SIATKA = 50
 
 BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
+BLUE = (0,0,255)
 
 ALLIES_SPAWN_POINTS = [(x,y) for x in range(100, 900, 100) for y in range(100, 700, 100)]
+
