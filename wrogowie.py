@@ -2,6 +2,7 @@ import pygame as pg
 from pygame.math import Vector2
 import math
 from dane_wrogow import DANE_WROGOW
+from game import Game
 
 class Wrog(pg.sprite.Sprite):
   def __init__(self,typ_wroga, waypoints, images):
@@ -10,6 +11,7 @@ class Wrog(pg.sprite.Sprite):
     self.pos = Vector2(self.waypoints[0])*50+[25,25]
     self.target_waypoint = 0
 
+    self.typ_wroga = typ_wroga
     #self.hp = DANE_WROGOW.get(typ_wroga)["hp"]
     #self.speed = DANE_WROGOW.get(typ_wroga)["speed"]
 
@@ -32,11 +34,21 @@ class Wrog(pg.sprite.Sprite):
     self.rect = self.image.get_rect()
     self.rect.center = self.pos
 
-  def update(self):
-    self.move()
+  def death(self,grupa,game):
+    self.alive = False
+    game.spawned_enemies -= 1
+    game.enemy_list.remove(self.typ_wroga)
+    grupa.remove(self)
+
+    if(len(grupa) == 0):
+      game.wave = min(game.wave + 1, game.max_wave)
+      game.process_enemies()
+
+  def update(self,grupa,game):
+    self.move(grupa,game)
     self.rotate()
 
-  def move(self):
+  def move(self,grupa,game):
     if(self.istarget==False):
       destination=self.waypoints[self.target_waypoint]
       self.destination = Vector2(destination)*50+[25,25]
@@ -55,8 +67,9 @@ class Wrog(pg.sprite.Sprite):
     else:
       #czy doszedł
       if(len(self.waypoints)-1==self.target_waypoint):
-        #worg umiera a my tracimy zycie
-        self.alive=False
+        #wrog umiera a my tracimy zycie
+        self.death(grupa,game)
+        #tutaj dodać tracenie życia przez gracza
       else:
         self.target_waypoint+=1
 
@@ -71,10 +84,11 @@ class Wrog(pg.sprite.Sprite):
     self.target=sojusznik
     self.istarget=True
 
-  def get_harmed(self, dmg, type):
+  def get_harmed(self, dmg, type,grupa,game): #grupa to grupa wrogowie z maina
     if (type == 'magic'):
       self.hp = self.hp - (100 - self.magic_res) / 100 * dmg
     if (type == 'direct'):
       self.hp = self.hp - (100 - self.armour) / 100 * dmg
     if (self.hp <= 0):
-      self.alive = False
+      self.death(grupa,game)
+

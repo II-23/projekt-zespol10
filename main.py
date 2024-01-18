@@ -6,6 +6,8 @@ from stale import *
 from sciezka import *
 from wieze import Wieza
 from wrogowie import *
+from game import Game
+import random
 
 #inicjalizuj pygame
 pygame.init()
@@ -27,7 +29,7 @@ wrog_image = {
     "d":    pygame.image.load('assets/images/enemies/enemy_4.png').convert_alpha()
 }
 
-#       !!!stawianie wierzy powinno być funkcją clasy wierza!!!
+#       !!!stawianie wiezy powinno być funkcją clasy wierza!!!
 #       !!! ok szefito, zmienione !!!
 
 #stworz grupy
@@ -39,8 +41,9 @@ wieze = pygame.sprite.Group()
 sciezka = pygame.sprite.Group()
 wrogowie = pygame.sprite.Group()
 
-wrog = Wrog("d",(200,300),wrog_image)
-wrogowie.add(wrog)
+#wrogowei
+czas_spawnu_wroga = pygame.time.get_ticks()
+
 
 #zegar
 clock = pygame.time.Clock()
@@ -80,7 +83,8 @@ while running:
 
         #aktualizuj grupy
         sojusznicy.update(wrogowie)
-        wrogowie.update()
+        for wrog in wrogowie:
+            wrog.update(wrogowie,game)
 
         #wyswietl grupy
         sojusznicy.draw(screen)
@@ -88,9 +92,19 @@ while running:
             wieza.draw(screen)
         wrogowie.draw(screen)
 
-        for i in wrogowie:
-            if(i.alive==False):
-                wrogowie.remove(i)
+        #spawnuj wrogow
+        random.seed(czas_spawnu_wroga)
+        if pygame.time.get_ticks() - czas_spawnu_wroga > 500 + random.randint(1,300) : #500 to stun miedzy spawnowaniem kolejnych wrogow
+            if game.spawned_enemies < len(game.enemy_list):
+                typ = game.enemy_list[game.spawned_enemies]
+
+                enemy = Wrog(typ, waypoints, wrog_image)
+                wrogowie.add(enemy)
+
+                game.spawned_enemies += 1
+                czas_spawnu_wroga = pygame.time.get_ticks()
+
+
         
 
     ######################
@@ -114,6 +128,8 @@ while running:
                         running = False
                     if przycisk_Test.klikniety(pygame.mouse.get_pos()):
                         game_status = GRA
+                        game = Game()
+                        game.process_enemies()
                         continue
 
         #eventy w kreatorze sciezki
@@ -123,6 +139,9 @@ while running:
                 wypelnienieSciezki()
             if czy_koniec_sciezki():
                 game_status = GRA
+                game = Game()
+                game.process_enemies()
+                #print(game.enemy_list)
                 continue
 
         #eventy w grze
@@ -131,11 +150,10 @@ while running:
                 sojusznik = Sojusznik(pygame.mouse.get_pos(), sojusznik_image)
                 sojusznicy.add(sojusznik)
 
-        if game_status==GRA:
-            wrog = Wrog("d", waypoints, wrog_image)
-            wrogowie.add(wrog)
 
-        if game_status == GRA:
+
+
+
             if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1: 
                 mouse_pos = pygame.mouse.get_pos()
                 #sprawdzam czy myszka jest na mapie
