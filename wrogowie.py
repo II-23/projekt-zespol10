@@ -16,13 +16,13 @@ class Wrog(pg.sprite.Sprite):
     #self.speed = DANE_WROGOW.get(typ_wroga)["speed"]
 
     # szybkość z jaką sie porusza w chyba pixelach na klatke
-    self.speed = 1
+    self.speed = DANE_WROGOW[typ_wroga]["speed"]
     # sumaryczna ilość hp (flat int)
-    self.hp = 100
+    self.hp = DANE_WROGOW[typ_wroga]["hp"]
     # % odporności na obrażenia fizyczne
-    self.armour = 0
+    self.armour = DANE_WROGOW[typ_wroga]["armour"]
     # % odporności na obrażenia magiczne
-    self.magic_res = 0
+    self.magic_res = DANE_WROGOW[typ_wroga]["magic resistance"]
 
     self.alive=True
     self.istarget=False
