@@ -1,14 +1,6 @@
 import pygame
 import sys
-from przycisk import Przycisk
-from sojusznicy import Sojusznik
 from stale import *
-from sciezka import *
-from wieze import Wieza
-from wrogowie import *
-from game import Game
-from przycisk_panel import PrzyciskPanel
-import random
 
 #inicjalizuj pygame
 pygame.init()
@@ -16,6 +8,18 @@ pygame.init()
 #stworz okno gry
 screen = pygame.display.set_mode((WIDTH + PANEL_PRZYCISKI, HEIGHT))
 pygame.display.set_caption('PWI - Tower Defense')
+
+
+from przycisk import Przycisk
+from sojusznicy import Sojusznik
+from sciezka import *
+from wieze import Wieza
+from wrogowie import *
+from game import Game
+from przycisk_panel import PrzyciskPanel
+import random
+
+
 
 #zmienne
 stawianie_wiez = False

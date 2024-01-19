@@ -4,8 +4,10 @@ from stale import *
 class Kwadrat(pygame.sprite.Sprite):
     def __init__(self, color, size, row, col):
         super().__init__()
-        self.image = pygame.Surface((size, size))
-        self.image.fill(color)
+        #self.image = pygame.Surface((size, size))
+        self.image= pygame.image.load('res/droga.png').convert_alpha()
+        #self.image.fill(color)
+        self.image = pygame.transform.scale(self.image, (size, size)) 
         self.rect = self.image.get_rect()
         self.rect.topleft = (col * size, row * size)
 
