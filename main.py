@@ -187,8 +187,9 @@ while running:
         #eventy w grze
         if game_status == GRA:
             if event.type == pygame.MOUSEBUTTONDOWN:
-                sojusznik = Sojusznik(pygame.mouse.get_pos(), sojusznik_image)
-                sojusznicy.add(sojusznik)
+                if pygame.mouse.get_pos()[0]<800:
+                    sojusznik = Sojusznik(pygame.mouse.get_pos(), sojusznik_image)
+                    sojusznicy.add(sojusznik)
 
 
             if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1: 
