@@ -41,7 +41,7 @@ class Sojusznik(pg.sprite.Sprite):
             # nie ma wroga w pobliżu
             pass
         else:
-            self.attack(target)
+            self.attack(target,enemy_sprite_group)
 
     def move(self, destination):
         self.destination = Vector2(destination)
