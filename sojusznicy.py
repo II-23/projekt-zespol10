@@ -24,6 +24,7 @@ class Sojusznik(pg.sprite.Sprite):
         # mam nadzieje że ułatwienie kiedy sojusznik umiera po prostu zmienia się alive na False i usunie się go z listy sojuszników
         # ewentualnie można zrobić custom event jako ally_died i on by to robił ale no
         self.alive=True
+        self.target=None
 
         self.angle = 0
         self.original_image = image
@@ -33,11 +34,12 @@ class Sojusznik(pg.sprite.Sprite):
 
     def update(self,enemy_sprite_group):
 
-        target=self.serch_target(enemy_sprite_group)
+        target=self.target
         print(target)
         if(target==None):
             # nie ma wroga w pobliżu
             self.spawn()
+            self.target=self.serch_target(enemy_sprite_group)
         else:
             distance=target.pos-self.position
             if(distance.length()<10):
@@ -98,7 +100,7 @@ class Sojusznik(pg.sprite.Sprite):
         for ene in enemy_sprite_group:
             distance=ene.pos - self.position
             # warunek czy wróg znajduje sie w okręgu wyznaczonym przez self.radius i środku w self.position
-            if(distance[0]**2+distance[1]**2<=self.radius**2):
+            if(distance[0]**2+distance[1]**2<=self.radius**2 and ene.istarget==False):
                 # tu przydała by się jakaś funkcja wroga typu tageted żeby przestał iść do waypointa tylko zaczął do sojusznika i zaczeli się bić np ene.targeted(sojusznik)
                 ene.targeted(self)
                 # Jeśli jakiegoś napotka będzie do niego podchodził

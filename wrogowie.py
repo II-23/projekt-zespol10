@@ -41,6 +41,8 @@ class Wrog(pg.sprite.Sprite):
     game.spawned_enemies -= 1
     game.enemy_list.remove(self.typ_wroga)
     grupa.remove(self)
+    if(self.istarget):
+      self.target.target=None
 
     if(len(grupa) == 0):
       game.wave = min(game.wave + 1, game.max_wave)
