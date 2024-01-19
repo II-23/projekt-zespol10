@@ -9,8 +9,10 @@ class Sojusznik(pg.sprite.Sprite):
         self.position = position
 
         #staty zawodnika (basic)
+        # attack dmg
+        self.dmg=10
         # szybkość z jaką sie porusza w chyba pixelach na klatke
-        self.speed = 2
+        self.speed = 1
         # sumaryczna ilość hp (flat int)
         self.hp=100
         # % odporności na obrażenia fizyczne
@@ -18,11 +20,10 @@ class Sojusznik(pg.sprite.Sprite):
         # % odporności na obrażenia magiczne
         self.magic_res=0
         # zasięg w jakim szuka wrogów (promień okręgu w którym ich szuka) w pixelach
-        self.radius=25
+        self.radius=100
         # mam nadzieje że ułatwienie kiedy sojusznik umiera po prostu zmienia się alive na False i usunie się go z listy sojuszników
         # ewentualnie można zrobić custom event jako ally_died i on by to robił ale no
         self.alive=True
-
 
         self.angle = 0
         self.original_image = image
@@ -31,16 +32,19 @@ class Sojusznik(pg.sprite.Sprite):
         self.rect.center = self.position
 
     def update(self,enemy_sprite_group):
-        if not self.is_already_spawned(self.position):
-            self.spawn()
-        self.rotate()
+
         target=self.serch_target(enemy_sprite_group)
+        print(target)
         if(target==None):
             # nie ma wroga w pobliżu
-            pass
+            self.spawn()
         else:
-            self.attack(target)
-
+            distance=target.pos-self.position
+            if(distance.length()<10):
+                self.attack(target,enemy_sprite_group)
+            else:
+                self.move(target.pos)
+        self.rotate()
     def move(self, destination):
         self.destination = Vector2(destination)
         #ustal jak ma sie poruszac jednostka, aby dotrzeć do celu
@@ -51,7 +55,7 @@ class Sojusznik(pg.sprite.Sprite):
             if distance > self.speed:
                 self.position += (self.movement.normalize()) * self.speed
             else:
-                self.position += (self.movement.normalize()) * distance
+                self.position += (self.movement.normalize()) * (distance-2)
 
     #wyszukuje najblizszy spawn point dla podanej pozycji
     def nearest_spawn_point(self, position):
@@ -94,13 +98,13 @@ class Sojusznik(pg.sprite.Sprite):
         for ene in enemy_sprite_group:
             distance=ene.pos - self.position
             # warunek czy wróg znajduje sie w okręgu wyznaczonym przez self.radius i środku w self.position
-            if(distance[0]**2+distance[1]**2<=self.radius):
+            if(distance[0]**2+distance[1]**2<=self.radius**2):
                 # tu przydała by się jakaś funkcja wroga typu tageted żeby przestał iść do waypointa tylko zaczął do sojusznika i zaczeli się bić np ene.targeted(sojusznik)
                 ene.targeted(self)
                 # Jeśli jakiegoś napotka będzie do niego podchodził
                 return ene
         return None
-    def attack(self,target):
-        #musi jakos sie odwolac do danego wroga...
-        print('uderzylem go')
+    def attack(self,target,enemy_sprite_group):
+        #zmienieli mi tu funkcje wroga so zakomentowane
+        #target.get_harmed(self.dmg,'direct')
         pass
