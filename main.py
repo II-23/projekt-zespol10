@@ -23,7 +23,10 @@ wybrana_wieza = None
 
 #zaladuj assety
 sojusznik_image = pygame.image.load('assets/images/enemies/enemy_1.png').convert_alpha()
-kursor_wieza = pygame.image.load('assets/images/turrets/cursor_turret.png').convert_alpha()
+kursor_wieza = pygame.image.load('res/wieze/wieza_1.png').convert_alpha()
+nowe_wymiary = (200,200)
+nowe_wymiary_2 = (130, 130)
+kursor_wieza = pygame.transform.scale(kursor_wieza, nowe_wymiary_2)
 wrog_image = {
     "a":    pygame.image.load('res/wrogowie/wrog1.png').convert_alpha(),
     "b":    pygame.image.load('res/wrogowie/wrog2.png').convert_alpha(),
@@ -31,7 +34,6 @@ wrog_image = {
     "d":    pygame.image.load('assets/images/enemies/enemy_4.png').convert_alpha()
 }
 kup_wieze = pygame.image.load('res/przyciski/kup_wieze.png').convert_alpha()
-nowe_wymiary = (200,200)
 kup_wieze = pygame.transform.scale(kup_wieze, nowe_wymiary)
 cancel = pygame.image.load('res/przyciski/cancel.png').convert_alpha()
 cancel = pygame.transform.scale(cancel, nowe_wymiary)
