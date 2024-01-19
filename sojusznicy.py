@@ -1,11 +1,11 @@
-import pygame as pg
+import pygame
 from stale import *
 from pygame.math import Vector2
 import math
 
-class Sojusznik(pg.sprite.Sprite):
+class Sojusznik(pygame.sprite.Sprite):
     def __init__(self, position, image):
-        pg.sprite.Sprite.__init__(self)
+        pygame.sprite.Sprite.__init__(self)
         self.position = position
 
         #staty zawodnika (basic)
@@ -21,6 +21,8 @@ class Sojusznik(pg.sprite.Sprite):
         self.magic_res=0
         # zasięg w jakim szuka wrogów (promień okręgu w którym ich szuka) w pixelach
         self.radius=100
+
+        self.czas_ataku = 0
         # mam nadzieje że ułatwienie kiedy sojusznik umiera po prostu zmienia się alive na False i usunie się go z listy sojuszników
         # ewentualnie można zrobić custom event jako ally_died i on by to robił ale no
         self.alive=True
@@ -28,22 +30,23 @@ class Sojusznik(pg.sprite.Sprite):
 
         self.angle = 0
         self.original_image = image
-        self.image = pg.transform.rotate(self.original_image, self.angle)
+        self.image =pygame.transform.rotate(self.original_image, self.angle)
         self.rect = self.image.get_rect()
         self.rect.center = self.position
 
-    def update(self,enemy_sprite_group):
+    def update(self,enemy_sprite_group,game):
 
         target=self.target
-        print(target)
+
         if(target==None):
             # nie ma wroga w pobliżu
             self.spawn()
             self.target=self.serch_target(enemy_sprite_group)
         else:
             distance=target.pos-self.position
-            if(distance.length()<10):
-                self.attack(target,enemy_sprite_group)
+            if(distance.length()<40):
+                self.attack(target,enemy_sprite_group,game)
+                print(self.hp)
             else:
                 self.move(target.pos)
         self.rotate()
@@ -83,7 +86,7 @@ class Sojusznik(pg.sprite.Sprite):
     def rotate(self):
         distance = self.destination - self.position
         self.angle = math.degrees(math.atan2(-distance[1], distance[0]))
-        self.image = pg.transform.rotate(self.original_image, self.angle)
+        self.image = pygame.transform.rotate(self.original_image, self.angle)
         self.rect = self.image.get_rect()
         self.rect.center = self.position
 
@@ -94,6 +97,7 @@ class Sojusznik(pg.sprite.Sprite):
             self.hp=self.hp-(100-self.armour)/100*dmg
         if(self.hp<=0):
             self.alive=False
+            #tu musi byc funkcja do zabijania tych ziomali bo na razie maja ujemne hp i sa niesmiertelni
         pass
     def serch_target(self,enemy_sprite_group):
         # iteracja po wszystkich wrogach i sprawdzenie czy są w odpowiendniej odległości
@@ -106,7 +110,10 @@ class Sojusznik(pg.sprite.Sprite):
                 # Jeśli jakiegoś napotka będzie do niego podchodził
                 return ene
         return None
-    def attack(self,target,enemy_sprite_group):
-        #zmienieli mi tu funkcje wroga so zakomentowane
-        #target.get_harmed(self.dmg,'direct')
+    def attack(self,target,enemy_sprite_group,game):
+
+        if pygame.time.get_ticks() - self.czas_ataku > FPS:
+
+            target.get_harmed(self.dmg,'direct',enemy_sprite_group,game)
+            self.czas_ataku = pygame.time.get_ticks()
         pass

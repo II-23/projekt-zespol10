@@ -30,8 +30,8 @@ kursor_wieza = pygame.transform.scale(kursor_wieza, nowe_wymiary_2)
 wrog_image = {
     "a":    pygame.image.load('res/wrogowie/wrog1.png').convert_alpha(),
     "b":    pygame.image.load('res/wrogowie/wrog2.png').convert_alpha(),
-    "c":    pygame.image.load('assets/images/enemies/enemy_3.png').convert_alpha(),
-    "d":    pygame.image.load('assets/images/enemies/enemy_4.png').convert_alpha()
+    "c":    pygame.image.load('res/wrogowie/wrog3.png').convert_alpha(),
+    "d":    pygame.image.load('res/wrogowie/wrog4.png').convert_alpha()
 }
 kup_wieze = pygame.image.load('res/przyciski/kup_wieze.png').convert_alpha()
 kup_wieze = pygame.transform.scale(kup_wieze, nowe_wymiary)
@@ -52,6 +52,7 @@ wrogowie = pygame.sprite.Group()
 
 #wrogowei
 czas_spawnu_wroga = pygame.time.get_ticks()
+czy_fala_idzie = True
 
 
 #zegar
@@ -109,7 +110,7 @@ while running:
                 stawianie_wiez = False
 
         #aktualizuj grupy
-        sojusznicy.update(wrogowie)
+        sojusznicy.update(wrogowie,game)
         for wrog in wrogowie:
             wrog.update(wrogowie,game)
         wieze.update(wrogowie, game)
@@ -127,16 +128,17 @@ while running:
         wrogowie.draw(screen)
 
         #spawnuj wrogow
-        random.seed(czas_spawnu_wroga)
-        if pygame.time.get_ticks() - czas_spawnu_wroga > 500 + random.randint(1,300) : #500 to stun miedzy spawnowaniem kolejnych wrogow
-            if game.spawned_enemies < len(game.enemy_list):
-                typ = game.enemy_list[game.spawned_enemies]
+        if czy_fala_idzie == True:
+            random.seed(czas_spawnu_wroga)
+            if pygame.time.get_ticks() - czas_spawnu_wroga > 500 + random.randint(1,300) : #500 to stun miedzy spawnowaniem kolejnych wrogow
+                if game.spawned_enemies < len(game.enemy_list):
+                    typ = game.enemy_list[game.spawned_enemies]
 
-                enemy = Wrog(typ, waypoints, wrog_image)
-                wrogowie.add(enemy)
+                    enemy = Wrog(typ, waypoints, wrog_image)
+                    wrogowie.add(enemy)
 
-                game.spawned_enemies += 1
-                czas_spawnu_wroga = pygame.time.get_ticks()
+                    game.spawned_enemies += 1
+                    czas_spawnu_wroga = pygame.time.get_ticks()
 
 
         
@@ -175,7 +177,7 @@ while running:
                 game_status = GRA
                 game = Game()
                 game.process_enemies()
-                #print(game.enemy_list)
+
                 continue
 
         #eventy w grze
