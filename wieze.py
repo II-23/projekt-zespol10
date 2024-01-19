@@ -3,6 +3,7 @@ import pygame as pg
 from stale import *
 from sciezka import *
 import math
+from wrogowie import Wrog
 
 class Wieza(pg.sprite.Sprite):
     def __init__ (self, image, mysz_x, mysz_y):
@@ -23,9 +24,13 @@ class Wieza(pg.sprite.Sprite):
         self.rect = self.orig_image.get_rect()
         self.rect.center = (self.x, self.y)
         self.zasieg_obraz = pg.Surface((self.zasieg * 2, self.zasieg * 2))
+        self.zasieg_obraz_strzal = self.zasieg_obraz
         self.zasieg_obraz.fill((0,0,0))
-        self.zasieg_obraz.set_colorkey((0,0,0))
+        self.zasieg_obraz_strzal.fill((0,0,0))
+        self.zasieg_obraz_strzal.set_colorkey((0,0,0))
         pg.draw.circle(self.zasieg_obraz, (255, 255, 0), (self.zasieg, self.zasieg), self.zasieg)
+        pg.draw.circle(self.zasieg_obraz_strzal, (0, 255, 0), (self.zasieg, self.zasieg), self.zasieg)
+        self.zasieg_obraz_strzal.set_alpha(150)
         self.zasieg_obraz.set_alpha(89)
         self.zasieg_rect = self.zasieg_obraz.get_rect()
         self.zasieg_rect.center = self.rect.center
@@ -33,6 +38,10 @@ class Wieza(pg.sprite.Sprite):
         #updatowanie wygladu
         self.angle = 90
         self.image = pg.transform.rotate(self.orig_image, self.angle)
+
+        #do strzałów
+        self.ostatni_strzal = 0
+        self.interwal_strzalow = 2000
 
 
     def postaw_wieze(mouse_pos, kursor_wieza, wieze):
@@ -49,6 +58,15 @@ class Wieza(pg.sprite.Sprite):
         powierzchnia.blit(self.image, self.rect)
         if self.wybrana:
             powierzchnia.blit(self.zasieg_obraz, self.zasieg_rect)
+    
+    def strzal(self, wrogowie, game):
+        teraz = pg.time.get_ticks()
+        if teraz - self.ostatni_strzal >= self.interwal_strzalow:
+            self.ostatni_strzal = teraz
+            if self.cel is not None and self.cel.alive == True:
+                self.cel.get_harmed(50, 'direct', wrogowie, game)
+                #powierzchnia.blit(self.zasieg_obraz_strzal, self.zasieg_rect)
+
     
     def wybierz_wieze(mouse_pos, wieze):
         mouse_x = mouse_pos[0] // SIATKA
@@ -75,7 +93,7 @@ class Wieza(pg.sprite.Sprite):
             if nowy_cel is not None:
                 self.angle = -math.degrees(math.atan2(y, x))
     
-    def update(self, wrogowie):
+    def update(self, wrogowie, game):
         if self.cel == None:
             self.wybierz_cel(wrogowie)
         else:
@@ -86,4 +104,5 @@ class Wieza(pg.sprite.Sprite):
                 self.cel = None
             else:
                 self.angle = -math.degrees(math.atan2(y, x))
-
+                if self.cel.alive == False:
+                    self.cel = None

@@ -112,11 +112,12 @@ while running:
         sojusznicy.update(wrogowie)
         for wrog in wrogowie:
             wrog.update(wrogowie,game)
-        wieze.update(wrogowie)
+        wieze.update(wrogowie, game)
         
         #wyswietl wieze
         for wieza in wieze:
             wieza.draw(screen)
+            wieza.strzal(wrogowie, game)
         
         if wybrana_wieza:
             wybrana_wieza.wybrana = True
