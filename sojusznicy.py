@@ -9,6 +9,8 @@ class Sojusznik(pg.sprite.Sprite):
         self.position = position
 
         #staty zawodnika (basic)
+        # attack dmg
+        self.dmg=10
         # szybkość z jaką sie porusza w chyba pixelach na klatke
         self.speed = 2
         # sumaryczna ilość hp (flat int)
@@ -18,7 +20,7 @@ class Sojusznik(pg.sprite.Sprite):
         # % odporności na obrażenia magiczne
         self.magic_res=0
         # zasięg w jakim szuka wrogów (promień okręgu w którym ich szuka) w pixelach
-        self.radius=25
+        self.radius=50
         # mam nadzieje że ułatwienie kiedy sojusznik umiera po prostu zmienia się alive na False i usunie się go z listy sojuszników
         # ewentualnie można zrobić custom event jako ally_died i on by to robił ale no
         self.alive=True
@@ -94,13 +96,13 @@ class Sojusznik(pg.sprite.Sprite):
         for ene in enemy_sprite_group:
             distance=ene.pos - self.position
             # warunek czy wróg znajduje sie w okręgu wyznaczonym przez self.radius i środku w self.position
-            if(distance[0]**2+distance[1]**2<=self.radius):
+            if(distance[0]**2+distance[1]**2<=self.radius**2):
                 # tu przydała by się jakaś funkcja wroga typu tageted żeby przestał iść do waypointa tylko zaczął do sojusznika i zaczeli się bić np ene.targeted(sojusznik)
                 ene.targeted(self)
                 # Jeśli jakiegoś napotka będzie do niego podchodził
                 return ene
         return None
-    def attack(self,target):
-        #musi jakos sie odwolac do danego wroga...
-        print('uderzylem go')
+    def attack(self,target,enemy_sprite_group):
+        #zmienieli mi tu funkcje wroga so zakomentowane
+        #target.get_harmed(self.dmg,'direct')
         pass

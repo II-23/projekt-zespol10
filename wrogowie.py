@@ -64,6 +64,9 @@ class Wrog(pg.sprite.Sprite):
     if distance != 0:
       if distance > self.speed:
         self.pos += (self.movement.normalize()) * self.speed
+      elif(self.istarget):
+        # jak sojusznik i wróg stana na tym samym polu to wróg znika więc ma stac pole przed
+        self.pos += (self.movement.normalize()) * (distance - 1)
       else:
         self.pos += (self.movement.normalize()) * distance
     else:
