@@ -30,6 +30,8 @@ class Wrog(pg.sprite.Sprite):
 
     self.angle = 0
     self.original_image = images.get(typ_wroga)
+    self.original_image = pg.transform.rotate(self.original_image,-90)
+    self.original_image = pg.transform.scale(self.original_image, (int(self.original_image.get_width() * 2.5), int(self.original_image.get_height() * 2.5)))
     self.image = pg.transform.rotate(self.original_image, self.angle)
     self.rect = self.image.get_rect()
     self.rect.center = self.pos

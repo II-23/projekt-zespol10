@@ -25,8 +25,8 @@ wybrana_wieza = None
 sojusznik_image = pygame.image.load('assets/images/enemies/enemy_1.png').convert_alpha()
 kursor_wieza = pygame.image.load('assets/images/turrets/cursor_turret.png').convert_alpha()
 wrog_image = {
-    "a":    pygame.image.load('assets/images/enemies/enemy_1.png').convert_alpha(),
-    "b":    pygame.image.load('assets/images/enemies/enemy_2.png').convert_alpha(),
+    "a":    pygame.image.load('res/wrogowie/wrog1.png').convert_alpha(),
+    "b":    pygame.image.load('res/wrogowie/wrog2.png').convert_alpha(),
     "c":    pygame.image.load('assets/images/enemies/enemy_3.png').convert_alpha(),
     "d":    pygame.image.load('assets/images/enemies/enemy_4.png').convert_alpha()
 }
