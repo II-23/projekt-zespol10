@@ -136,6 +136,9 @@ while running:
             if(i.alive):
                 i.update(wrogowie,game)
             else:
+                if i.target != None:
+                    i.target.target = None
+                    i.target.istarget = False
                 sojusznicy.remove(i)
 
         for wrog in wrogowie:

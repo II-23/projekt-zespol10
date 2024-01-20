@@ -18,6 +18,7 @@ class Game():
         self.win = 1
 
     def new_wave(self):
+        self.czy_fala_idzie = False
         self.wave += 1
         if self.wave <= self.max_wave:
             self.process_enemies()
