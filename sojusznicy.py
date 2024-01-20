@@ -96,6 +96,8 @@ class Sojusznik(pygame.sprite.Sprite):
             self.hp=self.hp-(100-self.armour)/100*dmg
         if(self.hp<=0):
             self.alive=False
+            self.target.target=None
+            self.target.istarget=False
             #tu musi byc funkcja do zabijania tych ziomali bo na razie maja ujemne hp i sa niesmiertelni
         pass
     def serch_target(self,enemy_sprite_group):
