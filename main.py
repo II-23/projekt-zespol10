@@ -132,11 +132,17 @@ while running:
                 stawianie_wiez = False
 
         #aktualizuj grupy
-        sojusznicy.update(wrogowie,game)
+        for i in sojusznicy:
+            if(i.alive):
+                i.update(wrogowie,game)
+            else:
+                sojusznicy.remove(i)
+
         for wrog in wrogowie:
             wrog.update(wrogowie,game)
         wieze.update(wrogowie, game)
-        
+
+
         #wyswietl wieze
         for wieza in wieze:
             wieza.draw(screen)
