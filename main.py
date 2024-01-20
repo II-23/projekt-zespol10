@@ -18,6 +18,7 @@ from wrogowie import *
 from game import Game
 from przycisk_panel import PrzyciskPanel
 import random
+from napis import pokaz_napis
 
 
 
@@ -26,6 +27,8 @@ stawianie_wiez = False
 wybrana_wieza = None
 
 #zaladuj assety
+bg = pygame.image.load('res/tlo/space.jpg').convert_alpha()
+bg = pygame.transform.scale(bg, (int(bg.get_width() * 0.19), int(bg.get_height() * 0.2)))
 sojusznik_image = pygame.image.load('assets/images/enemies/enemy_1.png').convert_alpha()
 kursor_wieza = pygame.image.load('res/wieze/wieza_1.png').convert_alpha()
 nowe_wymiary = (200,200)
@@ -47,8 +50,6 @@ cancel = pygame.transform.scale(cancel, nowe_wymiary)
 
 #stworz grupy
 sojusznicy = pygame.sprite.Group()
-sojusznik = Sojusznik((0,100),sojusznik_image)
-sojusznicy.add(sojusznik)
 wieze = pygame.sprite.Group()
 
 sciezka = pygame.sprite.Group()
@@ -63,9 +64,9 @@ czy_fala_idzie = True
 clock = pygame.time.Clock()
 
 #stworz przyciski
-przycisk_Start = Przycisk(475, 200, 100, 50, "Start")
-przycisk_Wyjdz = Przycisk(475, 250, 100, 50, "Wyjdz")
-przycisk_Test = Przycisk(475, 300, 100, 50, "skip to the game (nie chce mi sie robic ciagle tej sciezki)")
+przycisk_Start = Przycisk(450, 300, 180, 80, "Start")
+przycisk_Wyjdz = Przycisk(450, 400, 180, 80, "Wyjdz")
+
 przycisk_Wieza = PrzyciskPanel(WIDTH + 28, 170, kup_wieze, True)
 przycisk_Cancel = PrzyciskPanel(WIDTH + 28, 230, cancel, True)
 
@@ -84,22 +85,29 @@ while running:
     ###################################
 
     if game_status == MENU:
-        screen.fill(WHITE)
-        przycisk_Start.draw(screen)
-        przycisk_Wyjdz.draw(screen)
-        przycisk_Test.draw(screen)
+        screen.blit(bg,(0,0))
+        pokaz_napis(screen,"PWI - Tower Defense",'res/czcionki/FFFFORWA.TTF',(255,50,93),72,525,100)
+
+        for przycisk in [przycisk_Start,przycisk_Wyjdz]:
+            przycisk.draw(screen,pygame.mouse.get_pos())
+
+
 
     if game_status == KREATOR_SCIEZKI:
-        screen.fill(WHITE)
+        screen.fill(BLACK)
+
         panel = pygame.Rect(WIDTH, 0, PANEL_PRZYCISKI, HEIGHT)
         screen.fill(BLUE, panel)
         rysujSciezke(screen)
 
+        pokaz_napis(screen, "Narysuj trakt dla jednostek wroga", 'res/czcionki/FFFFORWA.TTF', WHITE, 16, 190,30)
+
     if game_status == GRA:
-        screen.fill(WHITE)
+        screen.fill(BLACK)
         panel = pygame.Rect(WIDTH, 0, PANEL_PRZYCISKI, HEIGHT)
         screen.fill(BLUE, panel)
         rysujSciezke(screen)
+
 
         #wyswietl przyciski z boku
         if przycisk_Wieza.draw(screen):
@@ -146,7 +154,11 @@ while running:
 
 
         
-
+        #narysuj napisy
+        pokaz_napis(screen, "Kup i postaw jednostki obronne,", 'res/czcionki/FFFFORWA.TTF', WHITE, 16, 190,
+                    30)
+        pokaz_napis(screen, "pokonaj mroczne poczwary!", 'res/czcionki/FFFFORWA.TTF', WHITE, 16, 180,
+                    60)
     ######################
     # ZARZADZANIE EVENTAMI
     ######################
@@ -166,11 +178,6 @@ while running:
                     if przycisk_Wyjdz.klikniety(pygame.mouse.get_pos()):
                         przycisk_Wyjdz.akcje()
                         running = False
-                    if przycisk_Test.klikniety(pygame.mouse.get_pos()):
-                        game_status = GRA
-                        game = Game()
-                        game.process_enemies()
-                        continue
 
         #eventy w kreatorze sciezki
         if game_status == KREATOR_SCIEZKI:
