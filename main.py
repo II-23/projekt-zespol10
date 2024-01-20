@@ -29,6 +29,25 @@ wybrana_wieza = None
 #zaladuj assety
 bg = pygame.image.load('res/tlo/space.jpg').convert_alpha()
 bg = pygame.transform.scale(bg, (int(bg.get_width() * 0.19), int(bg.get_height() * 0.2)))
+s = None
+w = 1
+h = 1
+rnd = random.randint(0,2)
+if rnd%3 == 0:
+    s = 'res/tlo/gwiazdy1.jpeg'
+    w = 0.2
+    h =0.2
+elif rnd%3 == 1:
+    s = 'res/tlo/gwiazdy2.jpg'
+
+elif rnd%3 == 2:
+    s = 'res/tlo/gwiazdy3.jpeg'
+    w = 0.25
+    h = 0.2
+bg_game = pygame.image.load(s).convert_alpha()
+bg_game = pygame.transform.scale(bg_game, (int(bg_game.get_width())*w, int(bg_game.get_height() *h)))
+
+
 sojusznik_image = pygame.image.load('assets/images/enemies/enemy_1.png').convert_alpha()
 kursor_wieza = pygame.image.load('res/wieze/wieza_1.png').convert_alpha()
 nowe_wymiary = (200,200)
@@ -76,10 +95,6 @@ przycisk_Cancel = PrzyciskPanel(WIDTH + 28, 230, cancel, True)
 game_status = MENU
 running = True
 
-def restart_gry():
-
-    print("restart!")
-
 ##################
 # GLOWNA PETLA GRY
 ##################
@@ -101,7 +116,8 @@ while running:
 
 
     if game_status == KREATOR_SCIEZKI:
-        screen.fill(BLACK)
+
+        screen.blit(bg_game,(0,0))
 
         panel = pygame.Rect(WIDTH, 0, PANEL_PRZYCISKI, HEIGHT)
         screen.fill(BLUE, panel)
@@ -111,7 +127,7 @@ while running:
 
     if game_status == GRA:
 
-        screen.fill(BLACK)
+        screen.blit(bg_game, (0, 0))
         panel = pygame.Rect(WIDTH, 0, PANEL_PRZYCISKI, HEIGHT)
         screen.fill(BLUE, panel)
         pokaz_napis(screen, "HP: " + str(game.hp_gracza), 'res/czcionki/FFFFORWA.TTF', WHITE, 32, 950,40)
@@ -195,7 +211,6 @@ while running:
 
     if game_status == GAME_OVER:
         #rysuje wszystko ale nie update'uje
-        screen.fill(BLACK)
         panel = pygame.Rect(WIDTH, 0, PANEL_PRZYCISKI, HEIGHT)
         screen.fill(BLUE, panel)
         pokaz_napis(screen, "HP: " + str(game.hp_gracza), 'res/czcionki/FFFFORWA.TTF', WHITE, 32, 950,40)
@@ -212,7 +227,7 @@ while running:
 
     if game_status == WIN:
         # rysuje wszystko ale nie update'uje
-        screen.fill(BLACK)
+
         panel = pygame.Rect(WIDTH, 0, PANEL_PRZYCISKI, HEIGHT)
         screen.fill(BLUE, panel)
         pokaz_napis(screen, "HP: " + str(game.hp_gracza), 'res/czcionki/FFFFORWA.TTF', WHITE, 32, 950, 40)

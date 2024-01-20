@@ -73,7 +73,7 @@ DANE_WROGOW = {
         "hp": 300,
         "strength": 20,
         "agility": 2,
-        "speed": 3,
+        "speed": 2,
         "armour": 25,
         "magic resistance": 0,
         "money" : 250
