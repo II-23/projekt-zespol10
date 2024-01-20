@@ -44,7 +44,8 @@ class Wrog(pygame.sprite.Sprite):
   def death(self,grupa,game):
     self.alive = False
     game.spawned_enemies -= 1
-    game.enemy_list.remove(self.typ_wroga)
+    if self.typ_wroga in game.enemy_list:
+      game.enemy_list.remove(self.typ_wroga)
     grupa.remove(self)
     if(self.istarget):
       self.target.target=None
@@ -125,8 +126,9 @@ class Wrog(pygame.sprite.Sprite):
       self.death(grupa,game)
 
   def attack(self):
-
-    if pygame.time.get_ticks() - self.czas_ataku > self.agility * FPS:
+    print("aaa")
+    if pygame.time.get_ticks() - self.czas_ataku > 1/self.agility * 250:
+      print("bbb")
       typ_ataku = None
 
       if self.typ_wroga == 'a' or self.typ_wroga == 'b' or self.typ_wroga == 'c':

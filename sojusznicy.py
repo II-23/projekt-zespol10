@@ -113,7 +113,7 @@ class Sojusznik(pygame.sprite.Sprite):
         return None
     def attack(self,target,enemy_sprite_group,game):
 
-        if pygame.time.get_ticks() - self.czas_ataku > FPS:
+        if pygame.time.get_ticks() - self.czas_ataku > 250:
 
             target.get_harmed(self.dmg,'direct',enemy_sprite_group,game)
             self.czas_ataku = pygame.time.get_ticks()
