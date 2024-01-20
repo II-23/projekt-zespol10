@@ -25,6 +25,7 @@ class Wrog(pygame.sprite.Sprite):
     self.magic_res = DANE_WROGOW[typ_wroga]["magic resistance"]
     self.strength = DANE_WROGOW[typ_wroga]["strength"]
     self.agility = DANE_WROGOW[typ_wroga]["agility"]
+    self.money = DANE_WROGOW[typ_wroga]["money"]
     self.czas_ataku = 0
 
     self.alive=True
@@ -39,6 +40,7 @@ class Wrog(pygame.sprite.Sprite):
     self.rect = self.image.get_rect()
     self.rect.center = self.pos
 
+
   def death(self,grupa,game):
     self.alive = False
     game.spawned_enemies -= 1
@@ -46,10 +48,14 @@ class Wrog(pygame.sprite.Sprite):
     grupa.remove(self)
     if(self.istarget):
       self.target.target=None
-
+      game.kasa += self.money
+    print("a")
     if(len(grupa) == 0):
-      game.wave = min(game.wave + 1, game.max_wave)
-      game.process_enemies()
+      print("b")
+      game.new_wave()
+
+
+
 
   def update(self,grupa,game):
 
@@ -91,7 +97,11 @@ class Wrog(pygame.sprite.Sprite):
       if(len(self.waypoints)-1==self.target_waypoint):
         #wrog umiera a my tracimy zycie
         self.death(grupa,game)
-        #tutaj dodać tracenie życia przez gracza
+        game.hp_gracza -= self.strength
+
+        if game.hp_gracza <= 0 :
+          game.win = -1
+          print("PRZEGRANA")
       else:
         self.target_waypoint+=1
 

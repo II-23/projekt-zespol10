@@ -46,7 +46,6 @@ class Sojusznik(pygame.sprite.Sprite):
             distance=target.pos-self.position
             if(distance.length()<40):
                 self.attack(target,enemy_sprite_group,game)
-                print(self.hp)
             else:
                 self.move(target.pos)
         self.rotate()

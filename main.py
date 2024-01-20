@@ -18,7 +18,7 @@ from wrogowie import *
 from game import Game
 from przycisk_panel import PrzyciskPanel
 import random
-from napis import pokaz_napis
+from napis import *
 
 
 
@@ -48,16 +48,18 @@ cancel = pygame.transform.scale(cancel, nowe_wymiary)
 #       !!!stawianie wiezy powinno być funkcją clasy wierza!!!
 #       !!! ok szefito, zmienione !!!
 
+
+
 #stworz grupy
 sojusznicy = pygame.sprite.Group()
 wieze = pygame.sprite.Group()
 
 sciezka = pygame.sprite.Group()
 wrogowie = pygame.sprite.Group()
+napisy = []
 
 #wrogowei
 czas_spawnu_wroga = pygame.time.get_ticks()
-czy_fala_idzie = True
 
 
 #zegar
@@ -66,12 +68,17 @@ clock = pygame.time.Clock()
 #stworz przyciski
 przycisk_Start = Przycisk(450, 300, 180, 80, "Start")
 przycisk_Wyjdz = Przycisk(450, 400, 180, 80, "Wyjdz")
+przycisk_Menu =  Przycisk(420, 500, 240, 80, "Wyjdz do menu")
 
 przycisk_Wieza = PrzyciskPanel(WIDTH + 28, 170, kup_wieze, True)
 przycisk_Cancel = PrzyciskPanel(WIDTH + 28, 230, cancel, True)
 
 game_status = MENU
 running = True
+
+def restart_gry():
+
+    print("restart!")
 
 ##################
 # GLOWNA PETLA GRY
@@ -103,9 +110,12 @@ while running:
         pokaz_napis(screen, "Narysuj trakt dla jednostek wroga", 'res/czcionki/FFFFORWA.TTF', WHITE, 16, 190,30)
 
     if game_status == GRA:
+
         screen.fill(BLACK)
         panel = pygame.Rect(WIDTH, 0, PANEL_PRZYCISKI, HEIGHT)
         screen.fill(BLUE, panel)
+        pokaz_napis(screen, "HP: " + str(game.hp_gracza), 'res/czcionki/FFFFORWA.TTF', WHITE, 32, 950,40)
+        pokaz_napis(screen, str(game.kasa) + " $", 'res/czcionki/FFFFORWA.TTF', WHITE, 32, 900, 90)
         rysujSciezke(screen)
 
 
@@ -138,9 +148,11 @@ while running:
         #wyswietl grupy
         sojusznicy.draw(screen)
         wrogowie.draw(screen)
+        for napis in napisy:
+            napis.update(game,napisy,pygame.time.get_ticks())
 
         #spawnuj wrogow
-        if czy_fala_idzie == True:
+        if game.czy_fala_idzie == True:
             random.seed(czas_spawnu_wroga)
             if pygame.time.get_ticks() - czas_spawnu_wroga > 500 + random.randint(1,300) : #500 to stun miedzy spawnowaniem kolejnych wrogow
                 if game.spawned_enemies < len(game.enemy_list):
@@ -152,6 +164,12 @@ while running:
                     game.spawned_enemies += 1
                     czas_spawnu_wroga = pygame.time.get_ticks()
 
+        else:
+            if len(napisy) == 0:
+                n = Napis_czasowy(screen,"Fala " + str(game.wave),"res/czcionki/FFFFORWA.TTF","#603fef",80,400,300,40*FPS)
+                napisy.append(n)
+
+
 
         
         #narysuj napisy
@@ -159,6 +177,47 @@ while running:
                     30)
         pokaz_napis(screen, "pokonaj mroczne poczwary!", 'res/czcionki/FFFFORWA.TTF', WHITE, 16, 180,
                     60)
+
+        if game.win == -1:
+            game_status = GAME_OVER
+
+        elif game.win == 1:
+            game_status = WIN
+
+    if game_status == GAME_OVER:
+        #rysuje wszystko ale nie update'uje
+        screen.fill(BLACK)
+        panel = pygame.Rect(WIDTH, 0, PANEL_PRZYCISKI, HEIGHT)
+        screen.fill(BLUE, panel)
+        pokaz_napis(screen, "HP: " + str(game.hp_gracza), 'res/czcionki/FFFFORWA.TTF', WHITE, 32, 950,40)
+        pokaz_napis(screen, str(game.kasa) + " $", 'res/czcionki/FFFFORWA.TTF', WHITE, 32, 900, 90)
+        rysujSciezke(screen)
+        #wyswietl grupy
+        sojusznicy.draw(screen)
+        wrogowie.draw(screen)
+
+        pokaz_napis(screen, "Koniec Gry", 'res/czcionki/FFFFORWA.TTF', "#d21f3c", 100, 550, 300)
+        pokaz_napis(screen, "Kosmici zniszczyli wszystko...", 'res/czcionki/FFFFORWA.TTF', "#d21f3c", 48, 550, 420)
+
+        przycisk_Menu.draw(screen,pygame.mouse.get_pos())
+
+    if game_status == WIN:
+        # rysuje wszystko ale nie update'uje
+        screen.fill(BLACK)
+        panel = pygame.Rect(WIDTH, 0, PANEL_PRZYCISKI, HEIGHT)
+        screen.fill(BLUE, panel)
+        pokaz_napis(screen, "HP: " + str(game.hp_gracza), 'res/czcionki/FFFFORWA.TTF', WHITE, 32, 950, 40)
+        pokaz_napis(screen, str(game.kasa) + " $", 'res/czcionki/FFFFORWA.TTF', WHITE, 32, 900, 90)
+        rysujSciezke(screen)
+        # wyswietl grupy
+        sojusznicy.draw(screen)
+        wrogowie.draw(screen)
+
+        pokaz_napis(screen, "Epicki Koniec!", 'res/czcionki/FFFFORWA.TTF', "#d21f3c", 100, 550, 300)
+        pokaz_napis(screen, "Wiktoria na skale Uniwersum", 'res/czcionki/FFFFORWA.TTF', "#d21f3c", 48, 550, 420)
+
+        przycisk_Menu.draw(screen, pygame.mouse.get_pos())
+
     ######################
     # ZARZADZANIE EVENTAMI
     ######################
@@ -213,9 +272,48 @@ while running:
 
 
 
+
         #eventy po zakonczeniu gry
         if game_status == GAME_OVER:
-            pass
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if event.button == 1:
+                    if przycisk_Menu.klikniety(pygame.mouse.get_pos()):
+                        przycisk_Menu.akcje()
+
+                        #resetuje wszystkie wazne zmienne
+                        # stworz grupy
+                        sojusznicy = pygame.sprite.Group()
+                        wieze = pygame.sprite.Group()
+
+                        sciezka = pygame.sprite.Group()
+                        wrogowie = pygame.sprite.Group()
+                        napisy = []
+
+                        # wrogowei
+                        czas_spawnu_wroga = pygame.time.get_ticks()
+
+                        game_status = MENU
+
+
+        if game_status == WIN:
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if event.button == 1:
+                    if przycisk_Menu.klikniety(pygame.mouse.get_pos()):
+                        przycisk_Menu.akcje()
+
+                        #resetuje wszystkie wazne zmienne
+                        # stworz grupy
+                        sojusznicy = pygame.sprite.Group()
+                        wieze = pygame.sprite.Group()
+
+                        sciezka = pygame.sprite.Group()
+                        wrogowie = pygame.sprite.Group()
+                        napisy = []
+
+                        # wrogowei
+                        czas_spawnu_wroga = pygame.time.get_ticks()
+
+                        game_status = MENU
 
     #aktualizuj ekran
     pygame.display.flip()
