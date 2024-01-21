@@ -2,6 +2,7 @@ import pygame
 from stale import *
 from pygame.math import Vector2
 import math
+from sciezka import koordynatySciezki
 
 class Sojusznik(pygame.sprite.Sprite):
     def __init__(self, position, image):
@@ -10,13 +11,13 @@ class Sojusznik(pygame.sprite.Sprite):
 
         #staty zawodnika (basic)
         # attack dmg
-        self.dmg=20
+        self.dmg=50
         # szybkość z jaką sie porusza w chyba pixelach na klatke
         self.speed = 1
         # sumaryczna ilość hp (flat int)
         self.hp=100
         # % odporności na obrażenia fizyczne
-        self.armour=0
+        self.armour=70
         # % odporności na obrażenia magiczne
         self.magic_res=0
         # zasięg w jakim szuka wrogów (promień okręgu w którym ich szuka) w pixelach
@@ -52,6 +53,7 @@ class Sojusznik(pygame.sprite.Sprite):
             else:
                 self.move(target.pos)
         self.rotate()
+
     def move(self, destination):
         self.destination = Vector2(destination)
         #ustal jak ma sie poruszac jednostka, aby dotrzeć do celu
@@ -65,24 +67,25 @@ class Sojusznik(pygame.sprite.Sprite):
                 self.position += (self.movement.normalize()) * (distance-2)
 
     #wyszukuje najblizszy spawn point dla podanej pozycji
+    #jako spawnpointy okreslam srodki kwadratow, ktore naleza do sciezki
     def nearest_spawn_point(self, position):
+
         distances = []
-        for spawn_point in ALLIES_SPAWN_POINTS:
-            spawn_point = Vector2(spawn_point)
+        spawn_points = []
+
+        for koordynaty in koordynatySciezki:
+            spawn_point = Vector2(koordynaty[0]*50+25,koordynaty[1]*50+25)
+            spawn_points.append(spawn_point)
             movement = spawn_point - position
             distance = movement.length()
             distances.append(distance)
         id = distances.index(min(distances))
-        return ALLIES_SPAWN_POINTS[id]
+        return spawn_points[id]
+
 
     #jednostka po postawieniu idzie do najblizszego spawn pointu
     def spawn(self):
         self.move(self.nearest_spawn_point(self.position))
-
-    def is_already_spawned(self,position):
-        if position in ALLIES_SPAWN_POINTS:
-            return True
-        return False
 
     #obraca jednostke tak aby patrzyla sie w strone w ktora idzie
     def rotate(self):
@@ -102,7 +105,6 @@ class Sojusznik(pygame.sprite.Sprite):
             if self.target.target != None:
                 self.target.target=None
                 self.target.istarget=False
-
         pass
     def serch_target(self,enemy_sprite_group):
         # iteracja po wszystkich wrogach i sprawdzenie czy są w odpowiendniej odległości
