@@ -67,7 +67,7 @@ class Sojusznik(pygame.sprite.Sprite):
             if distance > self.speed:
                 self.position += (self.movement.normalize()) * self.speed
             else:
-                self.position += (self.movement.normalize()) * (distance-2)
+                self.position += (self.movement.normalize()) * (distance)
 
     #wyszukuje najblizszy spawn point dla podanej pozycji
     #jako spawnpointy okreslam srodki kwadratow, ktore naleza do sciezki
