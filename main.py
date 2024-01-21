@@ -9,7 +9,6 @@ pygame.init()
 screen = pygame.display.set_mode((WIDTH + PANEL_PRZYCISKI, HEIGHT))
 pygame.display.set_caption('PWI - Tower Defense')
 
-
 from przycisk import Przycisk
 from sojusznicy import Sojusznik
 from sciezka import *
@@ -19,8 +18,6 @@ from game import Game
 from przycisk_panel import PrzyciskPanel
 import random
 from napis import *
-
-
 
 #zmienne
 stawianie_wiez = False
@@ -69,18 +66,15 @@ cancel = pygame.transform.scale(cancel, nowe_wymiary)
 #       !!! ok szefito, zmienione !!!
 
 
-
 #stworz grupy
 sojusznicy = pygame.sprite.Group()
 wieze = pygame.sprite.Group()
-
 sciezka = pygame.sprite.Group()
 wrogowie = pygame.sprite.Group()
 napisy = []
 
-#wrogowei
+#wrogowie
 czas_spawnu_wroga = pygame.time.get_ticks()
-
 
 #zegar
 clock = pygame.time.Clock()
@@ -114,8 +108,6 @@ while running:
         for przycisk in [przycisk_Start,przycisk_Wyjdz]:
             przycisk.draw(screen,pygame.mouse.get_pos())
 
-
-
     if game_status == KREATOR_SCIEZKI:
 
         screen.blit(bg_game,(0,0))
@@ -125,6 +117,7 @@ while running:
         rysujSciezke(screen)
 
         pokaz_napis(screen, "Narysuj trakt dla jednostek wroga", 'res/czcionki/FFFFORWA.TTF', WHITE, 16, 190,30)
+        pokaz_napis(screen, "Musisz zakonczyc sciezke na ktorejs z widocznych kratek!", 'res/czcionki/FFFFORWA.TTF', WHITE, 16, 320, 570)
 
     if game_status == GRA:
 
@@ -134,7 +127,6 @@ while running:
         pokaz_napis(screen, "HP: " + str(game.hp_gracza), 'res/czcionki/FFFFORWA.TTF', WHITE, 32, 950,40)
         pokaz_napis(screen, str(game.kasa) + " $", 'res/czcionki/FFFFORWA.TTF', WHITE, 32, 900, 90)
         rysujSciezke(screen)
-
 
         #wyswietl przyciski z boku
         if przycisk_Wieza.draw(screen):
@@ -189,15 +181,12 @@ while running:
 
                     game.spawned_enemies += 1
                     czas_spawnu_wroga = pygame.time.get_ticks()
-
         else:
             if len(napisy) == 0:
                 n = Napis_czasowy(screen,"Fala " + str(game.wave),"res/czcionki/FFFFORWA.TTF","#603fef",80,400,300,40*FPS)
                 napisy.append(n)
 
 
-
-        
         #narysuj napisy
         pokaz_napis(screen, "Kup i postaw jednostki obronne,", 'res/czcionki/FFFFORWA.TTF', WHITE, 16, 190,
                     30)
@@ -206,8 +195,7 @@ while running:
 
         if game.win == -1:
             game_status = GAME_OVER
-
-        elif game.win == 1:
+        if game.win == 1:
             game_status = WIN
 
     if game_status == GAME_OVER:
@@ -246,6 +234,7 @@ while running:
     ######################
     # ZARZADZANIE EVENTAMI
     ######################
+
     for event in pygame.event.get():
 
         #wyjscie z gry przez wcisniecie x
@@ -289,10 +278,11 @@ while running:
                         else:
                             wybrana_wieza = Wieza.wybierz_wieze(mouse_pos, wieze)   
             else:
-                if event.type == pygame.MOUSEBUTTONDOWN:
+                if event.type == pygame.MOUSEBUTTONDOWN and event.button == 3:
                     if pygame.mouse.get_pos()[0]<800:
                         sojusznik = Sojusznik(pygame.mouse.get_pos(), sojusznik_image)
                         sojusznicy.add(sojusznik)
+                        game.kasa -= 200
             
                       
             
