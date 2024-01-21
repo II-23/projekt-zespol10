@@ -79,7 +79,7 @@ DANE_WROGOW = {
         "money" : 250
     },
     "d": {
-        "hp": 500,
+        "hp": 1000,
         "strength": 100,
         "agility": 0.25,
         "speed": 0.5,

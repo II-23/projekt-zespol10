@@ -49,10 +49,10 @@ class Wrog(pygame.sprite.Sprite):
     grupa.remove(self)
     if(self.istarget):
       self.target.target=None
-      game.kasa += self.money
-    print("a")
+
+
     if(len(grupa) == 0):
-      print("b")
+
       game.new_wave()
 
 
@@ -124,6 +124,7 @@ class Wrog(pygame.sprite.Sprite):
       self.hp = self.hp - (100 - self.armour) / 100 * dmg
     if (self.hp <= 0):
       self.death(grupa,game)
+      game.kasa += self.money
 
   def attack(self):
     if pygame.time.get_ticks() - self.czas_ataku > 1/self.agility * 250:

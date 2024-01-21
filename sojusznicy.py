@@ -10,7 +10,7 @@ class Sojusznik(pygame.sprite.Sprite):
 
         #staty zawodnika (basic)
         # attack dmg
-        self.dmg=10
+        self.dmg=20
         # szybkość z jaką sie porusza w chyba pixelach na klatke
         self.speed = 1
         # sumaryczna ilość hp (flat int)
@@ -99,9 +99,10 @@ class Sojusznik(pygame.sprite.Sprite):
             self.hp=self.hp-(100-self.armour)/100*dmg
         if(self.hp<=0):
             self.alive=False
-            self.target.target=None
-            self.target.istarget=False
-            #tu musi byc funkcja do zabijania tych ziomali bo na razie maja ujemne hp i sa niesmiertelni
+            if self.target.target != None:
+                self.target.target=None
+                self.target.istarget=False
+
         pass
     def serch_target(self,enemy_sprite_group):
         # iteracja po wszystkich wrogach i sprawdzenie czy są w odpowiendniej odległości
