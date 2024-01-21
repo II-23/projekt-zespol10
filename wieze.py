@@ -50,7 +50,10 @@ class Wieza(pg.sprite.Sprite):
         mouse_x = mouse_pos[0] // SIATKA
         mouse_y = mouse_pos[1] // SIATKA
         wieza = Wieza(kursor_wieza, mouse_x, mouse_y)
-        if([mouse_x, mouse_y] not in koordynatySciezki):
+        for w in wieze:
+            if ((w.mysz_x, w.mysz_y) == (wieza.mysz_x, wieza.mysz_y)):
+                return
+        if([mouse_x, mouse_y] not in koordynatySciezki and game.kasa >= 100):
             wieze.add(wieza)
             game.kasa -= wieza.koszt
     
