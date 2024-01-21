@@ -61,7 +61,7 @@ DANE_WROGOW = {
         "money" : 100
     },
     "b": {
-        "hp": 400,
+        "hp": 250,
         "strength": 50,
         "agility": 1,
         "speed": 2,
@@ -70,7 +70,7 @@ DANE_WROGOW = {
         "money" : 300
     },
     "c": {
-        "hp": 300,
+        "hp": 200,
         "strength": 20,
         "agility": 2,
         "speed": 2,
@@ -79,7 +79,7 @@ DANE_WROGOW = {
         "money" : 250
     },
     "d": {
-        "hp": 800,
+        "hp": 500,
         "strength": 100,
         "agility": 0.25,
         "speed": 0.5,

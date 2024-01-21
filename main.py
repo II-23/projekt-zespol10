@@ -48,7 +48,7 @@ bg_game = pygame.image.load(s).convert_alpha()
 bg_game = pygame.transform.scale(bg_game, (int(bg_game.get_width())*w, int(bg_game.get_height() *h)))
 
 
-sojusznik_image = pygame.image.load('assets/images/enemies/enemy_1.png').convert_alpha()
+sojusznik_image = pygame.image.load('res/sojusznicy/sojusznik1.png').convert_alpha()
 kursor_wieza = pygame.image.load('res/wieze/wieza_1.png').convert_alpha()
 nowe_wymiary = (200,200)
 nowe_wymiary_2 = (130, 130)

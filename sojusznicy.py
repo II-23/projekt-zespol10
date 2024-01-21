@@ -29,8 +29,11 @@ class Sojusznik(pygame.sprite.Sprite):
         self.target=None
 
         self.angle = 0
+
         self.original_image = image
-        self.image =pygame.transform.rotate(self.original_image, self.angle)
+        self.original_image = pygame.transform.rotate(self.original_image, -90)
+        self.original_image = pygame.transform.scale(self.original_image, (int(self.original_image.get_width() * 2.5), int(self.original_image.get_height() * 2.5)))
+        self.image = pygame.transform.rotate(self.original_image, self.angle)
         self.rect = self.image.get_rect()
         self.rect.center = self.position
 

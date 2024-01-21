@@ -126,9 +126,7 @@ class Wrog(pygame.sprite.Sprite):
       self.death(grupa,game)
 
   def attack(self):
-    print("aaa")
     if pygame.time.get_ticks() - self.czas_ataku > 1/self.agility * 250:
-      print("bbb")
       typ_ataku = None
 
       if self.typ_wroga == 'a' or self.typ_wroga == 'b' or self.typ_wroga == 'c':
