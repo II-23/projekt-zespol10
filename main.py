@@ -126,6 +126,8 @@ while running:
         screen.fill(BLUE, panel)
         pokaz_napis(screen, "HP: " + str(game.hp_gracza), 'res/czcionki/FFFFORWA.TTF', WHITE, 32, 950,40)
         pokaz_napis(screen, str(game.kasa) + " $", 'res/czcionki/FFFFORWA.TTF', WHITE, 32, 900, 90)
+        pokaz_napis(screen, "Cena sojusznika: " + "250$", 'res/czcionki/FFFFORWA.TTF', WHITE, 15, 920, 500)
+        pokaz_napis(screen, "Cena wiezy: " + "100$", 'res/czcionki/FFFFORWA.TTF', WHITE, 15, 900, 550)
         rysujSciezke(screen)
 
         #wyswietl przyciski z boku
@@ -282,7 +284,7 @@ while running:
                     if pygame.mouse.get_pos()[0]<800 and game.kasa >= 200:
                         sojusznik = Sojusznik(pygame.mouse.get_pos(), sojusznik_image)
                         sojusznicy.add(sojusznik)
-                        game.kasa -= 200
+                        game.kasa -= sojusznik.price
             
                       
             
