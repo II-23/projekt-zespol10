@@ -10,6 +10,9 @@ class Sojusznik(pygame.sprite.Sprite):
         self.position = position
 
         #staty zawodnika (basic)
+
+        #koszt
+        self.price=250
         # attack dmg
         self.dmg=50
         # szybkość z jaką sie porusza w chyba pixelach na klatke
