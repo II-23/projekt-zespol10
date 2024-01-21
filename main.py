@@ -279,7 +279,7 @@ while running:
                             wybrana_wieza = Wieza.wybierz_wieze(mouse_pos, wieze)   
             else:
                 if event.type == pygame.MOUSEBUTTONDOWN and event.button == 3:
-                    if pygame.mouse.get_pos()[0]<800:
+                    if pygame.mouse.get_pos()[0]<800 and game.kasa >= 200:
                         sojusznik = Sojusznik(pygame.mouse.get_pos(), sojusznik_image)
                         sojusznicy.add(sojusznik)
                         game.kasa -= 200
