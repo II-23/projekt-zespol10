@@ -25,6 +25,7 @@ from napis import *
 #zmienne
 stawianie_wiez = False
 wybrana_wieza = None
+game = None
 
 #zaladuj assety
 bg = pygame.image.load('res/tlo/space.jpg').convert_alpha()
@@ -284,7 +285,7 @@ while running:
                         wybrana_wieza = None
                         Wieza.usun_range(wieze)
                         if stawianie_wiez == True:
-                            Wieza.postaw_wieze(mouse_pos, kursor_wieza, wieze)
+                            Wieza.postaw_wieze(mouse_pos, kursor_wieza, wieze, game)
                         else:
                             wybrana_wieza = Wieza.wybierz_wieze(mouse_pos, wieze)   
             else:

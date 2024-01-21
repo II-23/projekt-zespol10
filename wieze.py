@@ -4,6 +4,7 @@ from stale import *
 from sciezka import *
 import math
 from wrogowie import Wrog
+from game import *
 
 class Wieza(pg.sprite.Sprite):
     def __init__ (self, image, mysz_x, mysz_y):
@@ -12,6 +13,7 @@ class Wieza(pg.sprite.Sprite):
         self.zasieg = 75
         self.wybrana = False
         self.cel = None
+        self.koszt = 100
 
         #pozycja
         self.mysz_x = mysz_x
@@ -44,12 +46,13 @@ class Wieza(pg.sprite.Sprite):
         self.interwal_strzalow = 2000
 
 
-    def postaw_wieze(mouse_pos, kursor_wieza, wieze):
+    def postaw_wieze(mouse_pos, kursor_wieza, wieze, game):
         mouse_x = mouse_pos[0] // SIATKA
         mouse_y = mouse_pos[1] // SIATKA
         wieza = Wieza(kursor_wieza, mouse_x, mouse_y)
         if([mouse_x, mouse_y] not in koordynatySciezki):
             wieze.add(wieza)
+            game.kasa -= wieza.koszt
     
     def draw(self, powierzchnia):
         self.image = pg.transform.rotate(self.orig_image, self.angle - 90)
