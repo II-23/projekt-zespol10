@@ -105,7 +105,7 @@ class Sojusznik(pygame.sprite.Sprite):
             self.hp=self.hp-(100-self.armour)/100*dmg
         if(self.hp<=0):
             self.alive=False
-            if self.target.target != None:
+            if self.target != None:
                 self.target.target=None
                 self.target.istarget=False
         pass
