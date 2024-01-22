@@ -10,6 +10,8 @@ class Game():
         self.wave = 1
         self.max_wave = len(DANE_FAL)
         self.enemy_list = []
+        self.ile_wrogow_w_fali = DANE_FAL[0]["a"] + DANE_FAL[0]["b"] + DANE_FAL[0]["c"] + DANE_FAL[0]["d"]
+        self.zabici_w_fali = 0
         self.spawned_enemies = 0
         self.czy_fala_idzie = False
         self.win = 0 #0 - wciaz gra -1 - przegral 1 - wygral
@@ -20,7 +22,12 @@ class Game():
     def new_wave(self):
         self.czy_fala_idzie = False
         self.wave += 1
+        self.zabici_w_fali = 0
+        self.spawned_enemies = 0
+
         if self.wave <= self.max_wave:
+            self.ile_wrogow_w_fali = DANE_FAL[self.wave-1]["a"] + DANE_FAL[self.wave-1]["b"] + DANE_FAL[self.wave-1]["c"] + DANE_FAL[self.wave-1]["d"]
+
             self.process_enemies()
         else:
             print("Wiktoria")

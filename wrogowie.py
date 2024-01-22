@@ -7,9 +7,12 @@ from stale import FPS
 class Wrog(pygame.sprite.Sprite):
   def __init__(self,typ_wroga, waypoints, images):
     pygame.sprite.Sprite.__init__(self)
+
     self.waypoints = waypoints
     self.pos = Vector2(self.waypoints[0])*50+[25,25]
     self.target_waypoint = 0
+    destination = self.waypoints[self.target_waypoint]
+    self.destination = Vector2(destination) * 50 + [25, 25]
 
     self.typ_wroga = typ_wroga
     #self.hp = DANE_WROGOW.get(typ_wroga)["hp"]
@@ -43,15 +46,13 @@ class Wrog(pygame.sprite.Sprite):
 
   def death(self,grupa,game):
     self.alive = False
-    game.spawned_enemies -= 1
-    if self.typ_wroga in game.enemy_list:
-      game.enemy_list.remove(self.typ_wroga)
     grupa.remove(self)
     if(self.istarget):
       self.target.target=None
 
+    game.zabici_w_fali += 1
 
-    if(len(grupa) == 0):
+    if(game.zabici_w_fali >= game.ile_wrogow_w_fali):
 
       game.new_wave()
 

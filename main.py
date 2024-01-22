@@ -177,7 +177,8 @@ while running:
         if game.czy_fala_idzie == True:
             random.seed(czas_spawnu_wroga)
             if pygame.time.get_ticks() - czas_spawnu_wroga > 500 + random.randint(1,300) : #500 to stun miedzy spawnowaniem kolejnych wrogow
-                if game.spawned_enemies < len(game.enemy_list):
+                print(len(game.enemy_list),game.spawned_enemies,game.ile_wrogow_w_fali,game.zabici_w_fali)
+                if game.spawned_enemies < game.ile_wrogow_w_fali:
                     typ = game.enemy_list[game.spawned_enemies]
 
                     enemy = Wrog(typ, waypoints, wrog_image)
