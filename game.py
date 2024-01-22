@@ -6,7 +6,7 @@ from napis import *
 class Game():
     def __init__(self):
         self.hp_gracza = 1000
-        self.kasa = 1000
+        self.kasa = 200
         self.wave = 1
         self.max_wave = len(DANE_FAL)
         self.enemy_list = []
@@ -24,6 +24,7 @@ class Game():
         self.wave += 1
         self.zabici_w_fali = 0
         self.spawned_enemies = 0
+        self.enemy_list =[]
 
         if self.wave <= self.max_wave:
             self.ile_wrogow_w_fali = DANE_FAL[self.wave-1]["a"] + DANE_FAL[self.wave-1]["b"] + DANE_FAL[self.wave-1]["c"] + DANE_FAL[self.wave-1]["d"]

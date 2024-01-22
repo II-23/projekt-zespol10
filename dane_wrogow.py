@@ -64,7 +64,7 @@ DANE_WROGOW = {
         "speed": 1,
         "armour": 10,
         "magic resistance" : 0,
-        "money" : 100
+        "money" : 50
     },
     "b": {
         "hp": 250,
@@ -73,7 +73,7 @@ DANE_WROGOW = {
         "speed": 2,
         "armour": 75,
         "magic resistance": 10,
-        "money" : 300
+        "money" : 150
     },
     "c": {
         "hp": 200,
@@ -82,7 +82,7 @@ DANE_WROGOW = {
         "speed": 2,
         "armour": 25,
         "magic resistance": 0,
-        "money" : 250
+        "money" : 100
     },
     "d": {
         "hp": 1000,
@@ -91,6 +91,6 @@ DANE_WROGOW = {
         "speed": 0.5,
         "armour": 10,
         "magic resistance": 100,
-        "money" : 1000
+        "money" : 500
     },
 }

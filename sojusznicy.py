@@ -20,7 +20,7 @@ class Sojusznik(pygame.sprite.Sprite):
         # sumaryczna ilość hp (flat int)
         self.hp=100
         # % odporności na obrażenia fizyczne
-        self.armour=70
+        self.armour=10
         # % odporności na obrażenia magiczne
         self.magic_res=0
         # zasięg w jakim szuka wrogów (promień okręgu w którym ich szuka) w pixelach
