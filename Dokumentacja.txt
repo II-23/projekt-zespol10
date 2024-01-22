@@ -1,10 +1,31 @@
 1. SYSTEM GRY
 
+Menu główne
+Ekran śmierci
+Ekran wygranej
+Estetyczne tła w klimacie Science Fiction
+
+
+napisy na ekranie
+
 Czego nie udało się zaimplementować:
 
 2. WROGOWIE
 
+estetyczny wygląd dla każdego rodzaju wroga
+wrogowie umierają
+wrogowie mają różne statystyki (siła, szybkość zadawania obrażeń, odporność na atak wręcz, odporność na magię etc.)
+9 fal wrogów
+4 rodzaje wrogów
+łatwy i intuicyjny system tworzenia nowych fal i nowych rodzajów wrogów (dla teoretycznego przyszłego rozwoju gry)
+obrażenia dla gracza, kiedy wrogowi uda się pokonać ścieżkę
+pieniądze za zabijanie wrogów
+
 Czego nie udało się zaimplementować:
+
+animacje ataku
+animacje śmierci
+
 
 3. WIEŻE
 
@@ -18,3 +39,7 @@ gdy wróg pojawi się w ich zasięgu, idą do niego po czym go atakują
 
 Czego nie udało się zaimplementować:
 różnych rodzajów sojuszników
+
+5.MAPA I ŚCIEŻKA
+
+Czego nie udało się zaimplementować:
