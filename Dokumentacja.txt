@@ -52,4 +52,10 @@ animacja śmierci
 
 5.MAPA I ŚCIEŻKA
 
-Czego nie udało się zaimplementować:
+Można klikając w poszczególne punkty w edytorze ścieżki "narysować" trasę po której
+będą chodzić wrogowie.
+
+Czego nie udało się zaimplementować: 
+Usuwanie ścieżki po ponownym rozpoczęciu (stare sprity 
+ścieżki nie znikają).
+
