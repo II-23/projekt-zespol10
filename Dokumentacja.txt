@@ -1,14 +1,11 @@
 1. SYSTEM GRY
 
 Menu główne
+Menu tworzenia sciezki
 Ekran śmierci
 Ekran wygranej
-Estetyczne tła w klimacie Science Fiction
-
-
-napisy na ekranie
-
-Czego nie udało się zaimplementować:
+Gracz kupuje wieze i straznikow, aby powstrzymywać nadchodzące fale przeciwników.
+Za zabijanie przeciwników dostaje złoto, a jeśli przeciwnik przeciwnik przejdzie całą ścieżkę to gracz traci HP
 
 2. WROGOWIE
 
@@ -45,9 +42,13 @@ nowe (silniejsze) rodzaje wież przy kolejnych falach ataku
 mają własny zasięg i podstawowe statystyki
 po pojawieniu się na mapie idą na ścieżkę i czekają na wrogów
 gdy wróg pojawi się w ich zasięgu, idą do niego po czym go atakują
+giną gdy otrzymają wystarczająco obrażeń
 
 Czego nie udało się zaimplementować:
-różnych rodzajów sojuszników
+
+różne rodzaje sojuszników
+animacja śmierci
+
 
 5.MAPA I ŚCIEŻKA
 
