@@ -5,6 +5,8 @@ from stale import *
 #inicjalizuj pygame
 pygame.init()
 
+pygame.mixer.init()
+
 #stworz okno gry
 screen = pygame.display.set_mode((WIDTH + PANEL_PRZYCISKI, HEIGHT))
 pygame.display.set_caption('PWI - Tower Defense')
