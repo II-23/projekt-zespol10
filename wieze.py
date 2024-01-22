@@ -22,6 +22,8 @@ class Wieza(pg.sprite.Sprite):
         self.mysz_y = mysz_y
         self.x = (self.mysz_x + 0.5) * SIATKA
         self.y = (self.mysz_y + 0.5) * SIATKA
+        
+        self.sound = pg.mixer.Sound("assets/audio/shot.wav")
 
         #wyglad
         self.sprite_sheet = image
@@ -89,6 +91,7 @@ class Wieza(pg.sprite.Sprite):
             if self.cel is not None and self.cel.alive == True:
                 self.cel.get_harmed(50, 'direct', wrogowie, game)
                 self.isAnimationOn = True
+                self.sound.play()
                 #powierzchnia.blit(self.zasieg_obraz_strzal, self.zasieg_rect)
 
     
