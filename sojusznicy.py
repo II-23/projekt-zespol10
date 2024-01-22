@@ -12,7 +12,7 @@ class Sojusznik(pygame.sprite.Sprite):
         #staty zawodnika (basic)
 
         #koszt
-        self.price=250
+        self.price=300
         # attack dmg
         self.dmg=50
         # szybkość z jaką sie porusza w chyba pixelach na klatke
@@ -20,7 +20,7 @@ class Sojusznik(pygame.sprite.Sprite):
         # sumaryczna ilość hp (flat int)
         self.hp=100
         # % odporności na obrażenia fizyczne
-        self.armour=10
+        self.armour=70
         # % odporności na obrażenia magiczne
         self.magic_res=0
         # zasięg w jakim szuka wrogów (promień okręgu w którym ich szuka) w pixelach
