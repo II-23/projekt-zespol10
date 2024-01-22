@@ -20,7 +20,7 @@ from game import Game
 from przycisk_panel import PrzyciskPanel
 import random
 from napis import *
-
+from pygame import mixer
 #zmienne
 stawianie_wiez = False
 wybrana_wieza = None
@@ -282,7 +282,8 @@ while running:
                 game_status = GRA
                 game = Game()
                 game.process_enemies()
-
+                mixer.music.load('res/audio/background.wav')
+                mixer.music.play(-1)
                 continue
 
         #eventy w grze
