@@ -111,7 +111,7 @@ while running:
         for przycisk in [przycisk_Start,przycisk_Wyjdz]:
             przycisk.draw(screen,pygame.mouse.get_pos())
 
-    if game_status == KREATOR_SCIEZKI:
+    elif game_status == KREATOR_SCIEZKI:
 
         screen.blit(bg_game,(0,0))
 
@@ -122,15 +122,27 @@ while running:
         pokaz_napis(screen, "Narysuj trakt dla jednostek wroga", 'res/czcionki/FFFFORWA.TTF', WHITE, 16, 190,30)
         pokaz_napis(screen, "Musisz zakonczyc sciezke na ktorejs z widocznych kratek!", 'res/czcionki/FFFFORWA.TTF', WHITE, 16, 320, 570)
 
-    if game_status == GRA:
+    elif game_status == GRA:
 
         screen.blit(bg_game, (0, 0))
         panel = pygame.Rect(WIDTH, 0, PANEL_PRZYCISKI, HEIGHT)
         screen.fill(BLUE, panel)
-        pokaz_napis(screen, "HP: " + str(game.hp_gracza), 'res/czcionki/FFFFORWA.TTF', WHITE, 32, 950,40)
-        pokaz_napis(screen, str(game.kasa) + " $", 'res/czcionki/FFFFORWA.TTF', WHITE, 32, 900, 90)
-        pokaz_napis(screen, "Cena sojusznika: " + "250$", 'res/czcionki/FFFFORWA.TTF', WHITE, 15, 920, 500)
-        pokaz_napis(screen, "Cena wiezy: " + "100$", 'res/czcionki/FFFFORWA.TTF', WHITE, 15, 900, 550)
+
+        if game.hp_gracza >= 800:
+            kolor_hp = GREEN
+        elif game.hp_gracza >= 600:
+            kolor_hp = LIGHT_GREEN
+        elif game.hp_gracza >= 400:
+            kolor_hp = YELLOW
+        elif game.hp_gracza >= 200:
+            kolor_hp =  ORANGE
+        else:
+            kolor_hp = RED
+
+        pokaz_napis(screen, "HP: " + str(game.hp_gracza), 'res/czcionki/FFFFORWA.TTF', kolor_hp, 32, 920,40)
+        pokaz_napis(screen, "$: " + str(game.kasa) , 'res/czcionki/FFFFORWA.TTF', YELLOW, 32, 900, 90)
+        pokaz_napis(screen, "Cena sojusznika: " + "300$", 'res/czcionki/FFFFORWA.TTF', WHITE, 15, 920, 500)
+        pokaz_napis(screen, "Cena wiezy: " + "200$", 'res/czcionki/FFFFORWA.TTF', WHITE, 15, 900, 550)
         rysujSciezke(screen)
 
         #wyswietl przyciski z boku
@@ -205,7 +217,7 @@ while running:
         if game.win == 1:
             game_status = WIN
 
-    if game_status == GAME_OVER:
+    elif game_status == GAME_OVER:
         #rysuje wszystko ale nie update'uje
         panel = pygame.Rect(WIDTH, 0, PANEL_PRZYCISKI, HEIGHT)
         screen.fill(BLUE, panel)
@@ -221,7 +233,7 @@ while running:
 
         przycisk_Menu.draw(screen,pygame.mouse.get_pos())
 
-    if game_status == WIN:
+    elif game_status == WIN:
         # rysuje wszystko ale nie update'uje
 
         panel = pygame.Rect(WIDTH, 0, PANEL_PRZYCISKI, HEIGHT)
