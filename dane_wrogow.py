@@ -58,7 +58,7 @@ DANE_FAL = [
 
 DANE_WROGOW = {
     "a": {
-        "hp": 120,
+        "hp": 100,
         "strength" : 25,
         "agility" : 0.5,
         "speed": 1,
