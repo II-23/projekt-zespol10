@@ -15,7 +15,7 @@ class Wieza(pg.sprite.Sprite):
         self.zasieg = 75
         self.wybrana = False
         self.cel = None
-        self.koszt = 100
+        self.koszt = 200
 
         # Pozycja wieży
         self.mysz_x = mysz_x
