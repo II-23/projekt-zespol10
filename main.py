@@ -24,6 +24,7 @@ from napis import *
 #zmienne
 stawianie_wiez = False
 wybrana_wieza = None
+iteracja = -1
 game = None
 
 #zaladuj assety
@@ -148,13 +149,14 @@ while running:
         #wyswietl przyciski z boku
         if przycisk_Wieza.draw(screen):
             stawianie_wiez = True
+            iteracja += 1
         if stawianie_wiez == True:
             kursor_rect = kursor_wieza.get_rect()
             kursor_poz = pygame.mouse.get_pos()
             kursor_rect.center = kursor_poz
             if kursor_poz[0] < WIDTH:
                 screen.blit(kursor_wieza, kursor_rect)
-            if przycisk_Cancel.draw(screen):
+            if przycisk_Cancel.draw(screen) and iteracja > 0:
                 stawianie_wiez = False
 
         #aktualizuj grupy
