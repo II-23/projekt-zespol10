@@ -58,7 +58,7 @@ DANE_FAL = [
 
 DANE_WROGOW = {
     "a": {
-        "hp": 100,
+        "hp": 120,
         "strength" : 25,
         "agility" : 0.5,
         "speed": 1,
@@ -67,12 +67,12 @@ DANE_WROGOW = {
         "money" : 50
     },
     "b": {
-        "hp": 250,
-        "strength": 30,
+        "hp": 300,
+        "strength": 35,
         "agility": 1,
         "speed": 2,
-        "armour": 75,
-        "magic resistance": 10,
+        "armour": 70,
+        "magic resistance": 20,
         "money" : 150
     },
     "c": {
@@ -81,7 +81,7 @@ DANE_WROGOW = {
         "agility": 2,
         "speed": 2,
         "armour": 25,
-        "magic resistance": 150,
+        "magic resistance": 80,
         "money" : 250
     },
     "d": {
@@ -89,8 +89,8 @@ DANE_WROGOW = {
         "strength": 100,
         "agility": 0.25,
         "speed": 0.5,
-        "armour": 100,
-        "magic resistance": 100,
+        "armour": 95,
+        "magic resistance": 60,
         "money" : 500
     },
 }
