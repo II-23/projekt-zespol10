@@ -10,40 +10,57 @@ class Wieza(pg.sprite.Sprite):
     def __init__ (self, image, mysz_x, mysz_y):
         pg.sprite.Sprite.__init__(self)
 
+        # Specyfikajca wieży
+
         self.zasieg = 75
         self.wybrana = False
         self.cel = None
         self.koszt = 100
 
-        #pozycja
+        # Pozycja wieży
         self.mysz_x = mysz_x
         self.mysz_y = mysz_y
         self.x = (self.mysz_x + 0.5) * SIATKA
         self.y = (self.mysz_y + 0.5) * SIATKA
 
         #wyglad
-        self.orig_image = image
+        self.sprite_sheet = image
+        self.animation_list = self.zaladuj_zdjecie()
+        self.index_klatki = 0
+        self.update_time = pygame.time.get_ticks()
+        
+        self.orig_image = self.animation_list[0]
         self.rect = self.orig_image.get_rect()
         self.rect.center = (self.x, self.y)
+        self.isAnimationOn = False
+        
+        # self.zasieg_obraz_strzal = self.zasieg_obraz
+        
+        # self.zasieg_obraz_strzal.fill((0,0,0))
+        # self.zasieg_obraz_strzal.set_colorkey((0,0,0))
+        
+        # pg.draw.circle(self.zasieg_obraz_strzal, (0, 255, 0), (self.zasieg, self.zasieg), self.zasieg)
+        # self.zasieg_obraz_strzal.set_alpha(150)
+        
+        # self.zasieg_rect = self.zasieg_obraz.get_rect()
+        # self.zasieg_rect.center = self.rect.center
+        
+        # Wygląd zasięgu wieży
         self.zasieg_obraz = pg.Surface((self.zasieg * 2, self.zasieg * 2))
-        self.zasieg_obraz_strzal = self.zasieg_obraz
-        self.zasieg_obraz.fill((0,0,0))
-        self.zasieg_obraz_strzal.fill((0,0,0))
-        self.zasieg_obraz_strzal.set_colorkey((0,0,0))
+        self.zasieg_obraz.fill((0, 0, 0))
+        self.zasieg_obraz.set_colorkey((0, 0, 0))
         pg.draw.circle(self.zasieg_obraz, (255, 255, 0), (self.zasieg, self.zasieg), self.zasieg)
-        pg.draw.circle(self.zasieg_obraz_strzal, (0, 255, 0), (self.zasieg, self.zasieg), self.zasieg)
-        self.zasieg_obraz_strzal.set_alpha(150)
-        self.zasieg_obraz.set_alpha(89)
+        self.zasieg_obraz.set_alpha(100)
         self.zasieg_rect = self.zasieg_obraz.get_rect()
         self.zasieg_rect.center = self.rect.center
-
+        
         #updatowanie wygladu
         self.angle = 90
         self.image = pg.transform.rotate(self.orig_image, self.angle)
 
         #do strzałów
         self.ostatni_strzal = 0
-        self.interwal_strzalow = 2000
+        self.interwal_strzalow = 500
 
 
     def postaw_wieze(mouse_pos, kursor_wieza, wieze, game):
@@ -53,7 +70,7 @@ class Wieza(pg.sprite.Sprite):
         for w in wieze:
             if ((w.mysz_x, w.mysz_y) == (wieza.mysz_x, wieza.mysz_y)):
                 return
-        if([mouse_x, mouse_y] not in koordynatySciezki and game.kasa >= 100):
+        if [mouse_x, mouse_y] not in koordynatySciezki and game.kasa >= 100:
             wieze.add(wieza)
             game.kasa -= wieza.koszt
     
@@ -71,6 +88,7 @@ class Wieza(pg.sprite.Sprite):
             self.ostatni_strzal = teraz
             if self.cel is not None and self.cel.alive == True:
                 self.cel.get_harmed(50, 'direct', wrogowie, game)
+                self.isAnimationOn = True
                 #powierzchnia.blit(self.zasieg_obraz_strzal, self.zasieg_rect)
 
     
@@ -112,3 +130,21 @@ class Wieza(pg.sprite.Sprite):
                 self.angle = -math.degrees(math.atan2(y, x))
                 if self.cel.alive == False:
                     self.cel = None
+                    
+    def zaladuj_zdjecie(self):
+        size = self.sprite_sheet.get_height()
+        animation_list = []
+        for x in range(8):
+            temp_zdjecie = self.sprite_sheet.subsurface(x * size, 0, size, size)
+            animation_list.append(temp_zdjecie)
+        return animation_list
+    
+    def wlacz_animacje(self):
+        self.orig_image = self.animation_list[self.index_klatki]
+        if self.isAnimationOn:
+            if pygame.time.get_ticks() - self.update_time > ANIMATION_DELAY:
+                self.update_time = pg.time.get_ticks()
+                self.index_klatki += 1
+                if self.index_klatki >= 8:
+                    self.isAnimationOn = False
+                    self.index_klatki = 0

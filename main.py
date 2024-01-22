@@ -48,6 +48,7 @@ bg_game = pygame.transform.scale(bg_game, (int(bg_game.get_width())*w, int(bg_ga
 
 sojusznik_image = pygame.image.load('res/sojusznicy/sojusznik1.png').convert_alpha()
 kursor_wieza = pygame.image.load('res/wieze/wieza_1.png').convert_alpha()
+wieza_sheet = pygame.image.load('res/wieze/sprite_sheet_turret.png').convert_alpha()
 nowe_wymiary = (200,200)
 nowe_wymiary_2 = (130, 130)
 kursor_wieza = pygame.transform.scale(kursor_wieza, nowe_wymiary_2)
@@ -161,6 +162,7 @@ while running:
         for wieza in wieze:
             wieza.draw(screen)
             wieza.strzal(wrogowie, game)
+            wieza.wlacz_animacje()
         
         if wybrana_wieza:
             wybrana_wieza.wybrana = True
@@ -276,7 +278,7 @@ while running:
                         wybrana_wieza = None
                         Wieza.usun_range(wieze)
                         if stawianie_wiez == True:
-                            Wieza.postaw_wieze(mouse_pos, kursor_wieza, wieze, game)
+                            Wieza.postaw_wieze(mouse_pos, wieza_sheet, wieze, game)
                         else:
                             wybrana_wieza = Wieza.wybierz_wieze(mouse_pos, wieze)   
             else:
