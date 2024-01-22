@@ -29,7 +29,16 @@ animacje śmierci
 
 3. WIEŻE
 
+działają w obrębie własnego zasięgu
+można postawić po wybraniu opcji ‘kup wieżę’ (naturalnie nie na samej 
+ścieżce)
+skupiają się na jednym wrogu, gdy ten pojawia się w ich zasięgu i znajdują 
+nowego, gdy poprzedni znajdzie się poza zasięgiem
+ranią wrogów co konkretny interwał
+
 Czego nie udało się zaimplementować:
+
+nowe (silniejsze) rodzaje wież przy kolejnych falach ataku
 
 4. SOJUSZNICY
  
