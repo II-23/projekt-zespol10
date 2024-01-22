@@ -1,0 +1,20 @@
+1. SYSTEM GRY
+
+Czego nie udało się zaimplementować:
+
+2. WROGOWIE
+
+Czego nie udało się zaimplementować:
+
+3. WIEŻE
+
+Czego nie udało się zaimplementować:
+
+4. SOJUSZNICY
+ 
+mają własny zasięg i podstawowe statystyki
+po pojawieniu się na mapie idą na ścieżkę i czekają na wrogów
+gdy wróg pojawi się w ich zasięgu, idą do niego po czym go atakują
+
+Czego nie udało się zaimplementować:
+różnych rodzajów sojuszników
