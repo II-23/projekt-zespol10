@@ -23,7 +23,7 @@ class Wieza(pg.sprite.Sprite):
         self.x = (self.mysz_x + 0.5) * SIATKA
         self.y = (self.mysz_y + 0.5) * SIATKA
         
-        self.sound = pg.mixer.Sound("assets/audio/shot.wav")
+        self.sound = pg.mixer.Sound("res/audio/shot.wav")
 
         #wyglad
         self.sprite_sheet = image
