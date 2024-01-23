@@ -5,7 +5,10 @@ from stale import *
 # inicjalizuj pygame
 pygame.init()
 
-pygame.mixer.init()
+#włacz muzyke
+
+pygame.mixer.music.load("res/audio/background.wav")
+pygame.mixer.music.play(-1)
 
 # stworz okno gry
 screen = pygame.display.set_mode((WIDTH + PANEL_PRZYCISKI, HEIGHT))
