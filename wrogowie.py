@@ -52,7 +52,7 @@ class Wrog(pygame.sprite.Sprite):
 
     game.zabici_w_fali += 1
 
-    if(game.zabici_w_fali >= game.ile_wrogow_w_fali):
+    if(game.spawned_enemies == game.ile_wrogow_w_fali and game.zabici_w_fali >= game.ile_wrogow_w_fali and len(grupa) == 0):
 
       game.new_wave()
 
