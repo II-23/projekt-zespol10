@@ -140,11 +140,7 @@ while running:
         else:
             kolor_hp = RED
 
-        pokaz_napis(screen, "HP: " + str(game.hp_gracza), 'res/czcionki/FFFFORWA.TTF', kolor_hp, 32, 920, 40)
-        pokaz_napis(screen, "$: " + str(game.kasa), 'res/czcionki/FFFFORWA.TTF', YELLOW, 32, 900, 90)
-        pokaz_napis(screen, "Cena straznika: " + "300$", 'res/czcionki/FFFFORWA.TTF', WHITE, 15, 920, 500)
-        pokaz_napis(screen, "Cena wiezy: " + "200$", 'res/czcionki/FFFFORWA.TTF', WHITE, 15, 902, 550)
-        pokaz_napis(screen, "Wieze kupuj za pomoca menu po prawej, a straznikow - klikajac PPM" , 'res/czcionki/FFFFORWA.TTF', ORANGE, 16, 370, 575)
+
         rysujSciezke(screen)
 
         # wyswietl przyciski z boku
@@ -214,6 +210,11 @@ while running:
                     30)
         pokaz_napis(screen, "pokonaj mroczne poczwary!", 'res/czcionki/FFFFORWA.TTF', WHITE, 16, 180,
                     60)
+        pokaz_napis(screen, "HP: " + str(game.hp_gracza), 'res/czcionki/FFFFORWA.TTF', kolor_hp, 32, 920, 40)
+        pokaz_napis(screen, "$: " + str(game.kasa), 'res/czcionki/FFFFORWA.TTF', YELLOW, 32, 900, 90)
+        pokaz_napis(screen, "Cena straznika: " + "300$", 'res/czcionki/FFFFORWA.TTF', WHITE, 15, 920, 500)
+        pokaz_napis(screen, "Cena wiezy: " + "200$", 'res/czcionki/FFFFORWA.TTF', WHITE, 15, 902, 550)
+        pokaz_napis(screen, "Wieze kupuj za pomoca menu po prawej, a straznikow - klikajac PPM" , 'res/czcionki/FFFFORWA.TTF', ORANGE, 16, 370, 575)
 
         if game.win == -1:
             game_status = GAME_OVER
