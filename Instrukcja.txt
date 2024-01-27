@@ -1,6 +1,0 @@
-Aby uruchomić projekt, należy:
-
-1. Posiadać pythona oraz dowolny program, który go obsługuje (np. PyCharm)
-2. Zainstalować bibliotekę pygame
-3. Pobrać projekt z repozytorium githuba na swój komputer
-4. Otworzyć projekt i uruchomić plik "main"
